@@ -32,6 +32,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(8088, () => {
-  console.log("Server running at http://localhost:8088");
+server.listen(8008, () => {
+  console.log("Server running at http://localhost:8008");
 });

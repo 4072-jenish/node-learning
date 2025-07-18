@@ -15,6 +15,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f9f9f9;
       color: #333;
+      line-height: 1.6;
     }
 
     nav {
@@ -43,24 +44,65 @@
     }
 
     .container {
-      max-width: 1000px;
-      margin: 60px auto;
+      max-width: 1100px;
+      margin: 50px auto;
       padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-      text-align: center;
     }
 
-    h1 {
-      font-size: 2.5rem;
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: #1e1e2f;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin: 50px 0 20px;
+      color: #1e1e2f;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
       margin-bottom: 10px;
       color: #1e1e2f;
     }
 
-    p {
-      font-size: 1.2rem;
+    .card p {
       color: #666;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
     }
   </style>
 </head>
@@ -75,8 +117,50 @@
   </nav>
 
   <div class="container">
-    <h1>Welcome to the Home Page 🙌</h1>
-    <p>This is a clean and modern UI built with pure HTML and CSS.</p>
+    <header>
+      <h1>Welcome to Our Website 🙌</h1>
+      <p>We craft modern and responsive web experiences that engage and inspire.</p>
+    </header>
+
+    <section>
+      <h2 class="section-title">Why Choose Us?</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>💡 Innovative Ideas</h3>
+          <p>We bring creativity and technology together to build unique solutions for your business.</p>
+        </div>
+        <div class="card">
+          <h3>⚙️ Full-Stack Expertise</h3>
+          <p>From frontend to backend, our team handles everything with modern tools and frameworks.</p>
+        </div>
+        <div class="card">
+          <h3>🚀 Fast & Responsive</h3>
+          <p>Our sites load fast and look great on any device. User experience is always top priority.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">What We Do</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>🌐 Website Development</h3>
+          <p>Custom-built websites designed to fit your brand and goals perfectly.</p>
+        </div>
+        <div class="card">
+          <h3>🛒 eCommerce Solutions</h3>
+          <p>Launch your online store with powerful tools and seamless payment integration.</p>
+        </div>
+        <div class="card">
+          <h3>📈 SEO Optimization</h3>
+          <p>Get discovered on Google with clean code and smart keyword strategies.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 My Website. All rights reserved.</p>
+    </footer>
   </div>
 </body>
 </html>
