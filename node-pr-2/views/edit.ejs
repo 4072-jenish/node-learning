@@ -5,6 +5,58 @@
     <title>Edit Todo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    .dark-mode {
+        background-color: #121212 !important;
+        color: white !important;
+    }
+
+    .dark-mode .card {
+        background-color: #1e1e1e !important;
+        color: white !important;
+        border-color: #444;
+    }
+
+    .dark-mode .card-title,
+    .dark-mode .card-text,
+    .dark-mode label {
+        color: white !important;
+    }
+
+    .dark-mode .form-control,
+    .dark-mode .form-select,
+    .dark-mode textarea {
+        background-color: #333 !important;
+        color: white !important;
+        border-color: #555;
+    }
+
+    .dark-mode input::placeholder,
+    .dark-mode textarea::placeholder {
+        color: #ccc !important;
+    }
+
+    .dark-mode .btn-outline-dark {
+        color: white;
+        border-color: white;
+    }
+
+    .dark-mode .btn-outline-secondary {
+        color: white !important;
+        border-color: white !important;
+    }
+
+    .dark-mode .btn-outline-danger {
+        color: #ff6b6b !important;
+        border-color: #ff6b6b !important;
+    }
+
+    .dark-mode .text-muted {
+        color: #bbb !important;
+    }
+</style>
+
+
 <body class="bg-light">
 
 <div class="container py-5">
@@ -48,6 +100,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    const toggleBtn = document.getElementById('toggleMode');
+    const body = document.body;
+
+    // Load saved mode from localStorage
+    if (localStorage.getItem('mode') === 'dark') {
+        body.classList.add('dark-mode');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const mode = body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('mode', mode);
+    });
+</script>
 
 </body>
 </html>
