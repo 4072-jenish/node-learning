@@ -25,6 +25,21 @@
                     <input type="text" name="content" value="<%= todo.content %>" class="form-control" required>
                 </div>
 
+                <div class="col-12">
+                    <label class="form-label">Priority</label>
+                    <select name="priority" class="form-select" required>
+                        <option value="">Select Priority</option>
+                        <option value="One" <%= todo.priority === 'One' ? 'selected' : '' %>>Priority One</option>
+                        <option value="Two" <%= todo.priority === 'Two' ? 'selected' : '' %>>Priority Two</option>
+                        <option value="Three" <%= todo.priority === 'Three' ? 'selected' : '' %>>Priority Three</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="date" value="<%= todo.date %>" class="form-control" required>
+                </div>
+
                 <div class="col-12 d-flex justify-content-between">
                     <a href="/" class="btn btn-outline-secondary">← Back</a>
                     <button type="submit" class="btn btn-success">Update</button>
