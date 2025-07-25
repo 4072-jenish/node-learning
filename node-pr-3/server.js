@@ -5,32 +5,27 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-let todos = [
-    { title: 'Buy Groceries', content: 'Milk, Bread, jam', priority: 'One', date: '2025-07-22' },
-    { title: 'Study', content: 'Read Express.js documentation', priority: 'Two', date: '2025-07-23' },
-    { title: 'Exercise', content: '30-minute run in the evening', priority: 'Three', date: '2025-07-24' }
-];
 
 app.get('/', (req, res) => {
-    res.render('index', { todos, message: null });
+    res.render('index',);
 });
 app.get('/index.ejs', (req, res) => {
-    res.render('index', { todos, message: null });
+    res.render('index');
 });
 app.get('/chart.ejs', (req, res) => {
-    res.render('chart', { todos, message: null });
+    res.render('chart');
 });
 app.get('/form-basic.ejs', (req, res) => {
-    res.render('form-basic', { todos, message: null });
+    res.render('form-basic');
 });
 app.get('/authantication-login.ejs', (req, res) => {
-    res.render('authantication-login', { todos, message: null });
+    res.render('authantication-login');
 });
 app.get('/table.ejs', (req, res) => {
-    res.render('table', { todos, message: null });
+    res.render('table');
 });
 app.get('/authantication-register.ejs', (req, res) => {
-    res.render('authantication-register', { todos, message: null });
+    res.render('authantication-register');
 });
 
 
