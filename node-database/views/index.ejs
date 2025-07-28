@@ -14,7 +14,7 @@
       <ul>
         <% books.forEach(book => { %>
           <li>
-            <span><strong><%= book.title %></strong> by <%= book.author %></span>
+            <span><strong><%= book.title %></strong> by <%= book.author %>  for <%= book.pages %></span> 
             <span>
               <form action="/books/delete/<%= book._id %>" method="POST" style="display:inline;">
                 <button class="btn-danger" type="submit">Delete</button>
@@ -32,6 +32,9 @@
   
         <label for="author">Author:</label>
         <input type="text" name="author" id="author" required />
+        
+        <label for="pagea">Total Pages:</label>
+        <input type="text" name="pages" id="pages" required />
   
         <button type="submit">Add Book</button>
       </form>
