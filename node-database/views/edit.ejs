@@ -11,12 +11,30 @@
     <form action="/books/update/<%= book._id %>" method="POST">
         <label>Title:</label>
         <input type="text" name="title" value="<%= book.title %>" required><br>
+      
         <label>Author:</label>
         <input type="text" name="author" value="<%= book.author %>" required><br>
-        <label for="pagea">Total Pages:</label>
-        <input type="text" name="pages" value="<%= book.pages %>"   required />
+      
+        <label>Total Pages:</label>
+        <input type="text" name="pages" value="<%= book.pages %>" required /><br>
+      
+        <label>Genre:</label>
+        <input type="text" name="genre" value="<%= book.genre %>" /><br>
+      
+        <label>Publisher:</label>
+        <input type="text" name="publisher" value="<%= book.publisher %>" /><br>
+      
+        <label>Published Year:</label>
+        <input type="number" name="publishedYear" value="<%= book.publishedYear %>" /><br>
+      
+        <label>Language:</label>
+        <input type="text" name="language" value="<%= book.language %>" /><br>
+      
+        <label>ISBN:</label>
+        <input type="text" name="isbn" value="<%= book.isbn %>" /><br>
+      
         <button type="submit">Update</button>
-    </form>
+      </form>
     <a href="/">Back</a>
 </body>
 </html>
