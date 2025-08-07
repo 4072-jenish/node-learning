@@ -3,19 +3,17 @@ const database = require('./conections/dbconnection');
 const Book = require('./models/book');
 const app = express();
 
-database(); // connect to MongoDB
+database(); 
 
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-// Show all books
 app.get('/', async (req, res) => {
     const books = await Book.find();
     res.render('index', { books });
 });
 
-// Add a new book
 app.post('/books', async (req, res) => {
     const { title, author, pages, genre, publisher, publishedYear, language, isbn } = req.body;
 
@@ -33,13 +31,11 @@ app.post('/books', async (req, res) => {
     res.redirect('/');
 });
 
-// Show the edit form
 app.get('/books/edit/:id', async (req, res) => {
     const book = await Book.findById(req.params.id);
     res.render('edit', { book });
 });
 
-// Update the book
 app.post('/books/update/:id', async (req, res) => {
     const { title, author, pages, genre, publisher, publishedYear, language, isbn } = req.body;
 
@@ -56,8 +52,6 @@ app.post('/books/update/:id', async (req, res) => {
 
     res.redirect('/');
 });
-
-// Delete a book
 app.post('/books/delete/:id', async (req, res) => {
     await Book.findByIdAndDelete(req.params.id);
     res.redirect('/');

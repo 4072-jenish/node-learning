@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Document</title>
+    
+    
+      <label for="director">Director:</label>
+      <input type="text" name="director" id="director" required />
+    
+      <label for="duration">Duration:</label>
+      <input type="numb
+      
+      
+      er" name="duration" id="duration" required />
+    
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" id="genre" />
+    
+      <label for="RealeseDate">Realese Date</label>
+      <input type="date" name="releaseDate" id="releaseDate" />
+    
+      <label for="language">Language:</label>
+      <input type="text" name="language" id="language" />
+    
+      <label for="">ISBN:</label>
+      <input type="text" name="isbn" id="isbn" />
+    
+      <button type="submit">Add movie</button>
+    </form>
+    
+        <div class="card-grid"> 
+          <% movie.forEach(movie => { %>
+            <div class="movie-card">
+              <div class="movie-card-header">
+                <h3><%= movie.title %></h3> 
+                <span>by <%= movie.author %></span>
+              </div>
+        
+              <div class="movie-card-body">
+                <p><strong>Pages:</strong> <%= movie.pages %></p>
+                <p><strong>Genre:</strong> <%= movie.genre || "N/A" %></p>
+                <p><strong>Publisher:</strong> <%= movie.publisher || "N/A" %></p>
+                <p><strong>Year:</strong> <%= movie.publishedYear || "N/A" %></p>
+                <p><strong>Language:</strong> <%= movie.language || "N/A" %></p>
+                <p><strong>ISBN:</strong> <%= movie.isbn || "N/A" %></p>
+              </div>
+        
+              <div class="movie-card-actions">
+                <form action="/movies/delete/<%= movie._id %>" method="POST" style="display:inline;">
+                  <button class="btn-danger " type="submit">Delete</button>
+                </form>
+                <a href="/movies/edit/<%= movie._id %>" > <button class="btn-warning">Edit</button></a>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+</body>
+</html>

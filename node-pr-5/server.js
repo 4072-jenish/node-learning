@@ -1,12 +1,22 @@
 const express = require('express');
-const server =  express();
+const path = require('path');
+const app = express();
+const database = require('./config/mongoConenction');
+const { router } = require('./routes/movieRoutes'); 
+
 const port = 8808;
+app.use(express.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 
-server.get('/', (req, res) => {
-    res.end('Hello World!');
-})
+database();
 
-server.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
-})
+app.use('/', router);
+
+app.listen(port, () => {
+    
+
+    
+});
