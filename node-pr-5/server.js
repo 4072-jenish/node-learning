@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const database = require('./config/mongoConenction');
 const movieRoutes = require('./routes/movieRoutes');
-
+const seatRoutes = require('./routes/movieRoutes')
 const port = 8808;
 
 // Middleware to parse form data
@@ -24,6 +24,8 @@ app.get('/', (req, res) => res.redirect('/movies'));
 
 // Mount movies routes under /movies
 app.use('/movies', movieRoutes);
+
+app.use('/seats', seatRoutes);
 
 // Start server
 app.listen(port, () => {

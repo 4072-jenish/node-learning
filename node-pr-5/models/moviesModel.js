@@ -29,6 +29,10 @@ const movieSchema = new mongoose.Schema({
     min: 0,
     max: 10
   },
+  seats: {
+  type: [String],
+  default: []
+},
   language: {
     type: String,
     default: 'English'

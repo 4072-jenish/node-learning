@@ -90,11 +90,51 @@ const deleteMovie = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+const showSeatSelection = async (req, res) => {
+  try {
+    const movie = await moviesModel.findById(req.params.id);
+    if (!movie) return res.status(404).send('Movie not found');
+
+    // Just for example, we'll make a 5x8 seat layout
+    const totalRows = 5;
+    const seatsPerRow = 8;
+
+    res.render('reserveSeats', {
+      movie,
+      totalRows,
+      seatsPerRow
+    });
+  } catch (error) {
+    console.error('Error loading seat selection:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+// Handle reservation
+const reserveSeats = async (req, res) => {
+  try {
+    const { selectedSeats } = req.body; // This will be an array of seat IDs
+    const movie = await moviesModel.findById(req.params.id);
+
+    if (!movie) return res.status(404).send('Movie not found');
+
+    // For now, just log or save reserved seats
+    console.log(`Seats reserved for movie ${movie.title}:`, selectedSeats);
+
+    // Redirect to confirmation or homepage
+    res.redirect('/movies');
+  } catch (error) {
+    console.error('Error reserving seats:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 module.exports = {
   getMovies,
   createMovie,
   editMovieForm,
   updateMovie,
-  deleteMovie
+  deleteMovie,
+  showSeatSelection,
+  reserveSeats
 };
