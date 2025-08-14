@@ -1,0 +1,15 @@
+const express = require('express');
+const { addUser, allUser, createUser, delUser } = require('../controller/user.controller');
+const upload = require('../middleware/multerimage');
+
+const userRouter = express.Router();
+
+userRouter.get('/add-user' ,addUser );
+userRouter.post('/addUser', upload.single('image'), createUser);
+userRouter.get('/all-user' ,allUser );
+userRouter.get('/delete-user/:id', delUser);
+userRouter.get('/all-user' ,allUser );
+
+module.exports = userRouter;
+
+

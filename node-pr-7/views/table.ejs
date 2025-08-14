@@ -1,0 +1,63 @@
+<%- include("header") %>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Tables</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Library</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title m-b-0">Static Table</h5>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-right">#</th>
+                                <th class="text-right">First Name</th>
+                                <th class="text-right">Last Name</th>
+                                <th class="text-right">Email</th>
+                                <th class="text-right">Hobbies</th>
+                                <th class="text-right">Gender</th>
+                                <th class="text-right">Image</th>
+                                <th class="text-right">Contact Number</th>
+                                <th colspan="2" class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((user, index) => { %>
+                                <tr>
+                                  <td><%= index + 1 %></td>
+                                  <td><%= user.firstName %></td>
+                                  <td><%= user.lastName %></td>
+                                  <td><%= user.email %></td>
+                                  <td><%= user.hobbies %></td>
+                                  <td><%= user.gender %></td>
+                                  <td><img src="<%= user.image %>" alt="User Image" width="50" /></td>
+                                  <td><%= user.contactNo %></td>
+                                  <td><a href="/users/edit-user <%= user._id %>">Edit</a></td>
+                                  <td><a href="/users/delete-user/ <%= user._id %>">Delete</a></td>
+                                </tr>
+                              <% }) %>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("footer") %>

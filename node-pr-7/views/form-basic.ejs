@@ -1,0 +1,113 @@
+<%- include("header") %>
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Form Basic</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <form class="form-horizontal" action="/users/addUser" id="personalInfoForm" enctype="multipart/form-data" method="post">
+                                <div class="card-body">
+                                    <h4 class="card-title">Personal Info</h4>
+                            
+                                    <div class="form-group row">
+                                        <label for="firstName" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name Here" required>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label for="lastName" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name Here" required>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label for="password" class="col-sm-3 text-right control-label col-form-label">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" name="password" id="password" class="form-control" placeholder="Password Here" minlength="6" required>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-3 text-right control-label col-form-label">E-mail</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" name="email" id="email" class="form-control" placeholder="Email Here" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="image" class="col-sm-3 text-right control-label col-form-label">Profile Image</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label for="contactNo" class="col-sm-3 text-right control-label col-form-label">Contact No</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="contactNo" id="contactNo" class="form-control" placeholder="Contact No Here" pattern="[0-9]{10}" required>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label class="text-right col-md-3">Gender</label>
+                                        <div class="col-md-9">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="genderMale" name="gender" value="Male" required>
+                                                <label class="custom-control-label" for="genderMale">Male</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="genderFemale" name="gender" value="Female" required>
+                                                <label class="custom-control-label" for="genderFemale">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label class="text-right col-md-3">Hobbies</label>
+                                        <div class="col-md-9">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="hobbyReading" name="hobbies" value="Reading">
+                                                <label class="custom-control-label" for="hobbyReading">Reading</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="hobbyGaming" name="hobbies" value="Gaming">
+                                                <label class="custom-control-label" for="hobbyGaming">Gaming</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="hobbyAdventure" name="hobbies" value="Adventur">
+                                                <label class="custom-control-label" for="hobbyAdventure">Adventur</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="hobbySinging" name="hobbies" value="Singing">
+                                                <label class="custom-control-label" for="hobbySinging">Singing</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="form-group row">
+                                        <label for="message" class="col-sm-3 text-right control-label col-form-label">Message</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="message" name="message" maxlength="500" placeholder="Write your message here"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                </div>
+                
+<%- include("footer") %>
