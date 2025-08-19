@@ -1,6 +1,4 @@
-
-
-    const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
     const database = () =>{
         mongoose.connect('mongodb+srv://Jenish4072:JENISH166@cluster0.lzzfyyc.mongodb.net/users', { 
