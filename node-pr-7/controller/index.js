@@ -1,20 +1,24 @@
+const User = require("../models/userSchema");
 
 const deshboard = async (req, res) => {
-    try {
-        if(req.cookies.admin == undefined|| req.cookies.admin._id == undefined){
-            res.render("index.ejs");
-        }
-        else{
-           let user =  await User.findById(req.cookies.admin._id)
-          return res.render("index", {user})
-        }
-        
-     } catch (error) {
-        console.log("page not Found");
-        res.redirect("/")
-     }
-}
+  try {
+    if (!req.cookies.admin || !req.cookies.admin._id) {
+      return res.redirect("/");  
+    }
+
+    const user = await User.findById(req.cookies.admin._id);
+    if (!user) {
+      res.clearCookie("admin");
+      return res.redirect("/");
+    }
+
+    return res.render("index", { user });
+  } catch (error) {
+    console.log("Error in dashboard:", error);
+    res.redirect("/");
+  }
+};
 
 module.exports = {
-    deshboard
-}
+  deshboard,
+};

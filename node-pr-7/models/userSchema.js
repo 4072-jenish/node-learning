@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   hobbies: [String],
   message: String,
+  role: String,
   image: {
     type: String, 
     required: false
