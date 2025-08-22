@@ -8,10 +8,11 @@ exports.loginPage = async (req, res) => {
 
     let user = await User.findById(req.cookies.admin._id);
     if (!user) {
+      
       res.clearCookie("admin");
       return res.render("login");
     }
-
+    
     return res.render("index", { user });
   } catch (error) {
     console.log("Error in loginPage:", error);
@@ -41,5 +42,5 @@ exports.loginUser = async (req, res) => {
 
 exports.logOut = async (req, res) => {
   res.clearCookie("admin");
-  res.redirect("/login");
+  res.redirect("/");
 };

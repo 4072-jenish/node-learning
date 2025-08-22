@@ -40,7 +40,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%= blog.title %></h5>
                                             <p class="card-text" style="min-height: 80px;"><%= blog.content.length > 100 ? blog.content.substring(0, 100) + '...' : blog.content %></p>
-                                            <p class="text-muted mb-2"><small>By <%= blog.author %></small></p>
+                                            <p class="text-muted mb-2"><small>By <%= blog.authName %></small></p>
+                                            <img src="<%= blog.authImage %>" alt="<%= blog.title %>" style="height: 50px; object-fit: cover;">
+
                                             
                                             <div class="d-flex justify-content-between">
                                                 <a href="/blogs/editBlog/<%= blog._id %>" class="btn btn-warning btn-sm">Edit</a>

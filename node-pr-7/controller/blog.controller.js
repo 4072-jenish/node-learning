@@ -1,5 +1,5 @@
 const Blog = require('../models/blogSchema');
-
+const User = require('../models/userSchema');
 exports.getAllBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find();
@@ -16,10 +16,18 @@ exports.addBlogForm = (req, res) => {
 
 exports.addBlog = async (req, res) => {
     try {
-        const { title, content, author } = req.body;
+        const { title, content } = req.body;
         const image = req.file ? req.file.filename : null;
+        let auther = await User.findById(req.cookies.admin._id);
 
-        const newBlog = new Blog({ title, content, author, image });
+        let authName = "";
+        let authImage = "";
+        if (auther) {
+            authName = auther.firstName + " " + auther.lastName;
+            authImage = auther.image;
+        }
+        
+        const newBlog = new Blog({ title, content, authName , authImage , auther , image });
         await newBlog.save();
         res.redirect('/blogs');
     } catch (error) {

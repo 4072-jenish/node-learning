@@ -10,16 +10,20 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  author: {
-    type: String,  // Or you can reference User model using ObjectId
-    required: true
-  },
   category: {
     type: String,
     enum: ['Technology', 'Lifestyle', 'Education', 'Travel', 'Food', 'Other'],
     default: 'Other'
   },
   tags: {
+    type: [String],
+    default: []
+  },
+  authName: {
+    type: [String],
+    default: []
+  },
+  authImage: {
     type: [String],
     default: []
   },

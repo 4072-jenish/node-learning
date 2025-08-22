@@ -38,13 +38,7 @@
                                         <option value="Travel" <%= blog && blog.category === 'Travel' ? 'selected' : '' %>>Travel</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="author" class="col-sm-3 text-right control-label col-form-label">Author</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="author" id="author" class="form-control"
-                                           value="<%= blog ? blog.author : '' %>" placeholder="Author Name" required>
-                                </div>
+                                
                             </div>
                             <div class="form-group row">
                                 <label for="tags" class="col-sm-3 text-right control-label col-form-label">Tags</label>
