@@ -72,4 +72,15 @@ exports.deleteBlog = async (req, res) => {
         res.status(500).send('Error deleting blog');
     }
 };
+exports.myBlog = async (req, res) => {
+    try {
+        const user = await User.findById(req.cookies.admin._id)
+        const blogs = await Blog.findById(user._id);
+        
+        res.render('myBlogs', { blogs });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error loading my blogs');
+    }
+}
 

@@ -23,9 +23,9 @@ exports.loginPage = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-
+    
     if (!user) {
-      return res.render("login", { error: "User not found" });
+      return res.render("login");
     }
 
     if (user.password !== req.body.password) {
