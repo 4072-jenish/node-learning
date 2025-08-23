@@ -22,12 +22,15 @@ exports.addBlog = async (req, res) => {
 
         let authName = "";
         let authImage = "";
+        let authId = auther._id;
         if (auther) {
             authName = auther.firstName + " " + auther.lastName;
             authImage = auther.image;
         }
         
-        const newBlog = new Blog({ title, content, authName , authImage , auther , image });
+        const newBlog = new Blog({ title, content, authName , authImage , authId ,auther , image });
+        console.log(authId);
+        
         await newBlog.save();
         res.redirect('/blogs');
     } catch (error) {
@@ -76,6 +79,7 @@ exports.myBlog = async (req, res) => {
     try {
         const user = await User.findById(req.cookies.admin._id)
         const blogs = await Blog.findById(user._id);
+        console.log(Blog.userID);
         
         res.render('myBlogs', { blogs });
     } catch (error) {
