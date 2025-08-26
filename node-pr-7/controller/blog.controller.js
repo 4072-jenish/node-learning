@@ -14,27 +14,32 @@ exports.addBlogForm = (req, res) => {
     res.render('addBlogs');
 };
 
+
+
 exports.addBlog = async (req, res) => {
     try {
-        const { title, content } = req.body;
-        const image = req.file ? req.file.filename : null;
-        let auther = await User.findById(req.cookies.admin._id);
-
-        let authName = "";
-        let authImage = "";
-        let authId = auther._id;
-        if (auther) {
-            authName = auther.firstName + " " + auther.lastName;
-            authImage = auther.image;
+        if (!req.cookies.admin || !req.cookies.admin._id) {
+            return res.redirect("/")
         }
-        
-        const newBlog = new Blog({ title, content, authName , authImage , authId ,auther , image });
-        console.log(authId);
-        
+
+        const auther = await User.findById(req.cookies.admin._id);
+        if (!auther) {
+            return res.redirect("/")
+        }
+
+        const image = req.file ? req.file.filename : null;
+
+        const authName = `${auther.firstName} ${auther.lastName}`;
+        const authImage = auther.image;
+        const userID = auther._id;
+
+        const newBlog = new Blog({...req.body,  authName, authImage, userID });
+
         await newBlog.save();
-        res.redirect('/blogs');
+
+        res.redirect('/blogs/myBlog'); 
     } catch (error) {
-        console.log(error);
+        console.error("Error in addBlog:", error);
         res.status(500).send('Error adding blog');
     }
 };
@@ -77,14 +82,17 @@ exports.deleteBlog = async (req, res) => {
 };
 exports.myBlog = async (req, res) => {
     try {
-        const user = await User.findById(req.cookies.admin._id)
-        const blogs = await Blog.findById(user._id);
-        console.log(Blog.userID);
-        
-        res.render('myBlogs', { blogs });
+        const user = await User.findById(req.cookies.admin._id);
+        console.log("Current User ID:", user._id);
+
+        const blogs = await Blog.find({ userID: user._id });
+        console.log("Found blogs:", blogs);
+
+        res.render('myBlogs', { blogs, user });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).send('Error loading my blogs');
     }
-}
+};
+
 
