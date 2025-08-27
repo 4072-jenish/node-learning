@@ -19,6 +19,20 @@ const deshboard = async (req, res) => {
   }
 };
 
+const viewPro = async (req , res ) => {
+    try {
+          let user = await User.findById(req.cookies.admin._id);
+          console.log(user);
+          
+      if (user){
+       res.render("viewProfile", { user: usersArray }); 
+      }
+    } catch (error) {
+      console.log("Error in dashboard:", error);
+    res.redirect("/");
+    }
+}
 module.exports = {
   deshboard,
+  viewPro
 };
