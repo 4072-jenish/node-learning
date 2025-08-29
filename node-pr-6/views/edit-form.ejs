@@ -1,0 +1,128 @@
+<%- include("header") %>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title"><%= user ? 'Edit User' : 'Add User' %></h4>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form action="/users/editUser/<%= user._id %>" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <h4 class="card-title">Personal Info</h4>
+
+                            <div class="form-group row">
+                                <label for="firstName" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="firstName" id="firstName" class="form-control" 
+                                           value="<%= user.firstName%>" placeholder="First Name Here" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">+
+                                <label for="lastName" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="lastName" id="lastName" class="form-control" 
+                                           value="<%= user.lastName %>" placeholder="Last Name Here" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-sm-3 text-right control-label col-form-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" name="password" id="password" class="form-control" 
+                                           value="<%= user.password %>" placeholder="Password Here" minlength="6" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 text-right control-label col-form-label">E-mail</label>
+                                <div class="col-sm-9">
+                                    <input type="email" name="email" id="email" class="form-control" 
+                                           value="<%= user.email %>" placeholder="Email Here" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="image" class="col-sm-3 text-right control-label col-form-label">Profile Image</label>
+                                <div class="col-sm-9">
+                                    <input type="file" name="image" id="image" class="form-control" accept="image/*" <%= user ? '' : 'required' %>>
+                                    <% if(user && user.image) { %>
+                                        <p>Current Image:</p>
+                                        <img src="<%= user.image %>" width="80" alt="Profile">
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="contactNo" class="col-sm-3 text-right control-label col-form-label">Contact No</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="contactNo" id="contactNo" class="form-control" 
+                                           value="<%= user.contactNo %>" placeholder="Contact No Here" pattern="[0-9]{10}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="text-right col-md-3">Gender</label>
+                                <div class="col-md-9">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="genderMale" name="gender" value="Male" 
+                                            <%= user && user.gender === 'Male' ? 'checked' : '' %> required>
+                                        <label class="custom-control-label" for="genderMale">Male</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="genderFemale" name="gender" value="Female" 
+                                            <%= user && user.gender === 'Female' ? 'checked' : '' %> required>
+                                        <label class="custom-control-label" for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="text-right col-md-3">Hobbies</label>
+                                <div class="col-md-9">
+                                    <% const hobbies = user && user.hobbies ? user.hobbies : []; %>
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="hobbyReading" name="hobbies" value="Reading" 
+                                            <%= hobbies.includes('Reading') ? 'checked' : '' %>>
+                                        <label class="custom-control-label" for="hobbyReading">Reading</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="hobbyGaming" name="hobbies" value="Gaming" 
+                                            <%= hobbies.includes('Gaming') ? 'checked' : '' %>>
+                                        <label class="custom-control-label" for="hobbyGaming">Gaming</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="hobbyAdventure" name="hobbies" value="Adventure" 
+                                            <%= hobbies.includes('Adventure') ? 'checked' : '' %>>
+                                        <label class="custom-control-label" for="hobbyAdventure">Adventure</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="hobbySinging" name="hobbies" value="Singing" 
+                                            <%= hobbies.includes('Singing') ? 'checked' : '' %>>
+                                        <label class="custom-control-label" for="hobbySinging">Singing</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="message" class="col-sm-3 text-right control-label col-form-label">Message</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="message" name="message" maxlength="500" placeholder="Write your message here"><%= user ? user.message : '' %></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary"><%= user ? 'Update' : 'Submit' %></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<%- include("footer") %>

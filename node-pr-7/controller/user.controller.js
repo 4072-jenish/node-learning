@@ -1,4 +1,4 @@
-const userSchema = require("../models/userSchema");
+const User = require("../models/userScheema");
 const fs = require("fs");
 const path = require("path");
 
@@ -10,16 +10,18 @@ const checkAuth = (req, res) => {
   return true;
 };
 
-const addUser = (req, res) => {
+const addUser = async (req, res) => {
   if (!checkAuth(req, res)) return;
-  res.render("form-basic");
+
+  let user = await User.findById(req.cookies.admin._id)
+  res.render("form-basic", {user});
 };
 
 const allUser = async (req, res) => {
   if (!checkAuth(req, res)) return;
   try {
-    const users = await userSchema.find();
-    res.render("table", { users });
+    const user = await User.findById(req.cookies.admin._id);
+    res.render("table", { user });
   } catch (error) {
     console.error("Error fetching users:", error);
   }
@@ -33,7 +35,7 @@ const createUser = async (req, res) => {
       ? req.body.hobbies
       : [req.body.hobbies];
 
-    await userSchema.create({
+    await User.create({
       ...req.body,
       hobbies,
       image
@@ -49,14 +51,14 @@ const delUser = async (req, res) => {
   if (!checkAuth(req, res)) return;
   try {
     const { id } = req.params;
-    const user = await userSchema.findById(id);
+    const user = await User.findById(id);
     if (user) {
       if (user.image && fs.existsSync(path.join(__dirname, "..", user.image))) {
         fs.unlink(path.join(__dirname, "..", user.image), (err) => {
           if (err) console.error("Error deleting image:", err);
         });
       }
-      await userSchema.findByIdAndDelete(id);
+      await User.findByIdAndDelete(id);
     }
     res.redirect("/users/all-user");
   } catch (error) {
@@ -68,7 +70,7 @@ const delUser = async (req, res) => {
 const editUser = async (req, res) => {
   if (!checkAuth(req, res)) return;
   try {
-    const user = await userSchema.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -94,7 +96,7 @@ const updateUser = async (req, res) => {
         });
       }
     }
-    await userSchema.findByIdAndUpdate(userId, {
+    await User.findByIdAndUpdate(userId, {
       ...req.body,
       image
     });
