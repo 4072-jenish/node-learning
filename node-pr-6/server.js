@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes/indexRouters'); 
 const database = require('./config/mongoConenction');
 const passport = require('passport');
+const session = require('express-session')
 const LocalStrategy = require('./middleware/localStratagy');
 const app = express();
 
@@ -18,7 +19,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(passport.session({
+app.use(session({
     name : "testing",
     secret: "hello",
     saveUninitialized: false,
