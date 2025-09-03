@@ -28,11 +28,11 @@ app.use(session({
         maxAge: 1000*60*60
     }
 }));
-app.use(passport.session());
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(passport.setAutheticatUser);
 
 app.use('/', router);
 
-const PORT = 8088;
+const PORT = 8008;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`) )
