@@ -11,39 +11,44 @@ const checkAuth = (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-
-  let user = await User.findById(req.cookies.admin._id)
-  res.render("form-basic", {user});
+   return res.render("form-basic");
 };
 
 const allUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-  try {
-    const user = await User.findById(req.cookies.admin._id);
-    res.render("table", { user });
+   try {
+    let user = await User.find();
+    res.render("table", { user }); 
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.log(error);
+    return res.redirect("back");
   }
 };
 
 const createUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-  try {
-    let image = req.file ? "/uploads/" + req.file.filename : "";
-    let hobbies = Array.isArray(req.body.hobbies)
-      ? req.body.hobbies
-      : [req.body.hobbies];
+    try {
+    let imagePath = "";
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
 
-    await User.create({
+    let newUser = await User.create({
       ...req.body,
-      hobbies,
-      image
+      image: imagePath,
     });
 
-    res.redirect("/users/all-user");
+    if (newUser) {
+      console.log("User Added :)");
+      req.flash("success", "User Added!!!!");
+      return res.redirect("table");
+    } else {
+      console.log("Something Error");
+      req.flash("error", "Something Error");
+      return res.redirect("/users/add-user");
+    }
   } catch (error) {
-    console.error("Error adding user:", error);
+    console.log(error);
+    req.flash("error", "Something Error");
+    return res.redirect("back");
   }
 };
 
@@ -61,7 +66,11 @@ const delUser = async (req, res) => {
       try {
         await fs.unlinkSync(imagePath);
       } catch (error) {
+<<<<<<< HEAD
         console.log("File Missing");
+=======
+        console.log("File not found ");
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
       }
     }
 
@@ -77,14 +86,22 @@ const delUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
+<<<<<<< HEAD
     try {
+=======
+  try {
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     let id = req.params.id;
     let user = await User.findById(id);
     if(!user){
       console.log("User not Found");
       return res.redirect("table");
     }
+<<<<<<< HEAD
     return res.render("editUser", {user});
+=======
+    return res.render("edit-form", {user});
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
   } catch (error) {
     console.log(error);
     return res.redirect("back");
@@ -92,7 +109,11 @@ const editUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+<<<<<<< HEAD
  try {
+=======
+  try {
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     let id = req.params.id;
     let imagePath;
     let user = await User.findById(id);
@@ -106,7 +127,11 @@ const updateUser = async (req, res) => {
       try {
         await fs.unlinkSync(imagePath);
       } catch (error) {
+<<<<<<< HEAD
         console.log("File Missing");
+=======
+        console.log("File not found");
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
       }
     }
     imagePath = `/uploads/${req.file.filename}`
@@ -114,8 +139,13 @@ const updateUser = async (req, res) => {
       imagePath = user.image;
     }
     await User.findByIdAndUpdate(id, {...req.body, image: imagePath}, {new: true});
+<<<<<<< HEAD
     console.log("User Update Success");
     req.flash("success", "User Update Success"); 
+=======
+    console.log("Update Success");
+    req.flash("success", "Update Success"); 
+>>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     return res.redirect("table");
 
   } catch (error) {

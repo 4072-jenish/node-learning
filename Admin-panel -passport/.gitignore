@@ -1,0 +1,12 @@
+node_modules
+package-lock.json
+config
+controller
+middleware
+model
+public
+routes
+uploads
+views
+package.json
+server.js

@@ -14,8 +14,9 @@ exports.loginPage = async (req, res) => {
   }
 };
 
-exports.loginUser = (req, res, next) => {
-      try {
+
+exports.loginUser = async (req, res) => {
+  try { 
     req.flash("success", 'Login Success');
     return res.redirect("/dashboard");
   } catch (error) {
@@ -24,7 +25,7 @@ exports.loginUser = (req, res, next) => {
   }
 };
 exports.logOut = async (req, res) => {
-  try {
+ try { 
     req.session.destroy((err)=> {
       if (err){
         console.log(err);

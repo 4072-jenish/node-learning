@@ -1,4 +1,3 @@
-
 const express = require('express');
 const { deshboard, viewPro } = require('../controller');
 const userRouter = require('./user.route');
@@ -11,8 +10,10 @@ const router = express.Router();
 
 router.get('/dashboard', passport.authenticate  ('local', {failureRedirect: "/"}), deshboard);
 router.use('/users', userRouter);
+router.get('/dashboard', passport.checkAuthentication , deshboard);
 router.get('/', loginPage)
 router.use('/login',  passport.authenticate ('local', {failureRedirect: "/"}) , authRouter);
+router.use('/login', authRouter);
 router.use('/blogs', blogRouter);
 router.use('/profile', viewPro);
 
