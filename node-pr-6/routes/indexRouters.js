@@ -9,10 +9,10 @@ const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/dashboard', deshboard);
 router.use('/users', userRouter);
+router.get('/dashboard', passport.checkAuthentication , deshboard);
 router.get('/', loginPage)
-router.use('/login',  passport.authenticate('local', {failureRedirect: "/"}) , authRouter);
+router.use('/login', authRouter);
 router.use('/blogs', blogRouter);
 router.use('/profile', viewPro);
 

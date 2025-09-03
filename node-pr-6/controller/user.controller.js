@@ -11,99 +11,121 @@ const checkAuth = (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-
-  let user = await User.findById(req.cookies.admin._id)
-  res.render("form-basic", {user});
+   return res.render("form-basic");
 };
 
 const allUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-  try {
-    const user = await User.findById(req.cookies.admin._id);
-    res.render("table", { user });
+   try {
+    let user = await User.find();
+    res.render("table", { user }); 
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.log(error);
+    return res.redirect("back");
   }
 };
 
 const createUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
-  try {
-    let image = req.file ? "/uploads/" + req.file.filename : "";
-    let hobbies = Array.isArray(req.body.hobbies)
-      ? req.body.hobbies
-      : [req.body.hobbies];
+    try {
+    let imagePath = "";
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
 
-    await User.create({
+    let newUser = await User.create({
       ...req.body,
-      hobbies,
-      image
+      image: imagePath,
     });
 
-    res.redirect("/users/all-user");
+    if (newUser) {
+      console.log("User Added :)");
+      req.flash("success", "User Added!!!!");
+      return res.redirect("table");
+    } else {
+      console.log("Something Error");
+      req.flash("error", "Something Error");
+      return res.redirect("/users/add-user");
+    }
   } catch (error) {
-    console.error("Error adding user:", error);
+    console.log(error);
+    req.flash("error", "Something Error");
+    return res.redirect("back");
   }
 };
 
 const delUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-    if (user) {
-      if (user.image && fs.existsSync(path.join(__dirname, "..", user.image))) {
-        fs.unlink(path.join(__dirname, "..", user.image), (err) => {
-          if (err) console.error("Error deleting image:", err);
-        });
-      }
-      await User.findByIdAndDelete(id);
+    let id = req.params.id;
+    let user = await User.findById(id);
+    if(!user){
+      console.log("User not Found");
+      req.flash("error", "User Not Found!!!");
+      return res.redirect("table");
     }
-    res.redirect("/users/all-user");
+    if(user.image != ""){
+      let imagePath = path.join(__dirname, "..", user.image);
+      try {
+        await fs.unlinkSync(imagePath);
+      } catch (error) {
+        console.log("File not found ");
+      }
+    }
+
+    await User.findByIdAndDelete(id);
+    console.log("User Delete Success");
+    req.flash("success", "User Delete Success"); 
+    return res.redirect("table");
+
   } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).send("Internal Server Error");
+    console.log(error);
+    return res.redirect("back");
   }
 };
 
 const editUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).send("User not found");
+    let id = req.params.id;
+    let user = await User.findById(id);
+    if(!user){
+      console.log("User not Found");
+      return res.redirect("table");
     }
-    res.render("edit-form", { user });
+    return res.render("edit-form", {user});
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.log(error);
+    return res.redirect("back");
   }
 };
 
 const updateUser = async (req, res) => {
-  if (!checkAuth(req, res)) return;
   try {
-    const userId = req.params.id;
-    const oldImage = req.body.oldImage;
-
-    let image = oldImage;
-
-    if (req.file) {
-      image = "/uploads/" + req.file.filename;
-      if (oldImage && fs.existsSync(path.join(__dirname, "..", oldImage))) {
-        fs.unlink(path.join(__dirname, "..", oldImage), (err) => {
-          if (err) console.error("Error deleting old image:", err);
-        });
+    let id = req.params.id;
+    let imagePath;
+    let user = await User.findById(id);
+    if(!user){
+      console.log("User not Found");
+      return res.redirect("table");
+    }
+    if(req.file){
+      if(user.image != ""){
+      imagePath = path.join(__dirname, "..", user.image);
+      try {
+        await fs.unlinkSync(imagePath);
+      } catch (error) {
+        console.log("File not found");
       }
     }
-    await User.findByIdAndUpdate(userId, {
-      ...req.body,
-      image
-    });
+    imagePath = `/uploads/${req.file.filename}`
+    }else{
+      imagePath = user.image;
+    }
+    await User.findByIdAndUpdate(id, {...req.body, image: imagePath}, {new: true});
+    console.log("Update Success");
+    req.flash("success", "Update Success"); 
+    return res.redirect("table");
 
-    res.redirect("/users/all-user");
   } catch (error) {
-    console.error("Error updating user:", error);
+    console.log(error);
+    return res.redirect("back");
   }
 };
 
