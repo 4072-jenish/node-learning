@@ -1,5 +1,6 @@
 const passport = require("passport");
 const User = require("../models/userSchema");
+const userModel = require("../models/userSchema");
 
 exports.loginPage = async (req, res) => {
    try {
@@ -17,7 +18,6 @@ exports.loginPage = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try { 
-    req.flash("success", 'Login Success');
     return res.redirect("/dashboard");
   } catch (error) {
     console.log("something Wrong");

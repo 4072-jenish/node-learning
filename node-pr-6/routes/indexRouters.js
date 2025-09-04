@@ -1,21 +1,19 @@
 const express = require('express');
 const { deshboard, viewPro } = require('../controller');
 const userRouter = require('./user.route');
-const authRouter = require('./authRouter');
 const { loginPage } = require('../controller/auth.controller');
+const  authRouter  =  require("../routes/authRouter")
 const blogRouter = require('./blogRouter');
-const passport = require('passport');
+const passport = require('../middleware/localStratagy');
 
 const router = express.Router();
 
-router.get('/dashboard', passport.authenticate  ('local', {failureRedirect: "/"}), deshboard);
-router.use('/users', userRouter);
-router.get('/dashboard', passport.checkAuthentication , deshboard);
 router.get('/', loginPage)
-router.use('/login',  passport.authenticate ('local', {failureRedirect: "/"}) , authRouter);
 router.use('/login', authRouter);
-router.use('/blogs', blogRouter);
-router.use('/profile', viewPro);
+router.get('/dashboard', passport.checkAuthentication, deshboard);
+router.use('/users', passport.checkAuthentication, userRouter);
+router.use('/blogs', passport.checkAuthentication, blogRouter);
+router.use('/profile', passport.checkAuthentication, viewPro);
 
 
 module.exports = router;

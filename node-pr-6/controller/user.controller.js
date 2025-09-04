@@ -2,13 +2,13 @@ const User = require("../models/userSchema");
 const fs = require("fs");
 const path = require("path");
 
-const checkAuth = (req, res) => {
-  if (!req.cookies.admin || !req.cookies.admin._id) {
-    res.redirect("/");
-    return false;
-  }
-  return true;
-};
+// const checkAuth = (req, res) => {
+//   if (!req.cookies.admin || !req.cookies.admin._id) {
+//     res.redirect("/");
+//     return false;
+//   }
+//   return true;
+// };
 
 const addUser = async (req, res) => {
    return res.render("form-basic");
@@ -66,11 +66,8 @@ const delUser = async (req, res) => {
       try {
         await fs.unlinkSync(imagePath);
       } catch (error) {
-<<<<<<< HEAD
         console.log("File Missing");
-=======
         console.log("File not found ");
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
       }
     }
 
@@ -86,22 +83,14 @@ const delUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-<<<<<<< HEAD
-    try {
-=======
   try {
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     let id = req.params.id;
     let user = await User.findById(id);
     if(!user){
       console.log("User not Found");
       return res.redirect("table");
     }
-<<<<<<< HEAD
     return res.render("editUser", {user});
-=======
-    return res.render("edit-form", {user});
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
   } catch (error) {
     console.log(error);
     return res.redirect("back");
@@ -109,11 +98,7 @@ const editUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-<<<<<<< HEAD
- try {
-=======
   try {
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     let id = req.params.id;
     let imagePath;
     let user = await User.findById(id);
@@ -127,11 +112,7 @@ const updateUser = async (req, res) => {
       try {
         await fs.unlinkSync(imagePath);
       } catch (error) {
-<<<<<<< HEAD
-        console.log("File Missing");
-=======
         console.log("File not found");
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
       }
     }
     imagePath = `/uploads/${req.file.filename}`
@@ -139,13 +120,8 @@ const updateUser = async (req, res) => {
       imagePath = user.image;
     }
     await User.findByIdAndUpdate(id, {...req.body, image: imagePath}, {new: true});
-<<<<<<< HEAD
-    console.log("User Update Success");
-    req.flash("success", "User Update Success"); 
-=======
     console.log("Update Success");
     req.flash("success", "Update Success"); 
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
     return res.redirect("table");
 
   } catch (error) {

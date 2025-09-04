@@ -3,15 +3,19 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/indexRouters'); 
 const database = require('./config/mongoConenction');
-const passport = require('passport');
+// const passport = require('passport');
 const session = require('express-session')
-const LocalStrategy = require('./middleware/localStratagy');
+// const LocalStrategy = require('./middleware/localStratagy');
+const passport = require('./middleware/localStratagy'); 
+const flash = require('connect-flash');
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use(flash());
 
 database();
 

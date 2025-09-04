@@ -2,7 +2,7 @@ const Blog = require('../models/blogSchema');
 const User = require('../models/userSchema');
 
 // ✅ Get all blogs
-exports.getAllBlogs = async (req, res) => {
+const getAllBlogs = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       req.flash("error", "Please login first!");
@@ -20,7 +20,7 @@ exports.getAllBlogs = async (req, res) => {
 };
 
 // ✅ Render Add Blog Form
-exports.addBlogForm = async (req, res) => {
+const addBlogForm = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       req.flash("error", "Please login to add a blog.");
@@ -36,7 +36,7 @@ exports.addBlogForm = async (req, res) => {
 };
 
 // ✅ Add Blog
-exports.addBlog = async (req, res) => {
+const addBlog = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       return res.redirect("/");
@@ -70,9 +70,7 @@ exports.addBlog = async (req, res) => {
     res.status(500).send('Error adding blog');
   }
 };
-
-// ✅ Render Edit Blog Form
-exports.editBlogForm = async (req, res) => {
+const editBlogForm = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       return res.redirect("/");
@@ -91,8 +89,7 @@ exports.editBlogForm = async (req, res) => {
   }
 };
 
-// ✅ Update Blog
-exports.updateBlog = async (req, res) => {
+const updateBlog = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       return res.redirect("/");
@@ -114,8 +111,7 @@ exports.updateBlog = async (req, res) => {
   }
 };
 
-// ✅ Delete Blog
-exports.deleteBlog = async (req, res) => {
+const deleteBlog = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       return res.redirect("/");
@@ -130,8 +126,7 @@ exports.deleteBlog = async (req, res) => {
   }
 };
 
-// ✅ My Blogs (Logged-in User)
-exports.myBlog = async (req, res) => {
+const myBlog = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
       return res.redirect("/");
@@ -145,4 +140,14 @@ exports.myBlog = async (req, res) => {
     console.error(error);
     res.status(500).send('Error loading my blogs');
   }
+};
+
+module.exports = {
+  getAllBlogs,
+  addBlogForm,
+  addBlog,
+  editBlogForm,
+  updateBlog,
+  deleteBlog,
+  myBlog
 };

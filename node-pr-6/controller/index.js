@@ -2,11 +2,8 @@ const User = require("../models/userSchema");
 
 const deshboard = async (req, res) => {
   try {
-<<<<<<< HEAD
-      return res.redirect("/");  
-=======
+    
     return res.render("index");
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
   } catch (error) {
     console.log("something Wrong");
     return res.redirect("/");
@@ -14,14 +11,13 @@ const deshboard = async (req, res) => {
 };
 
 const viewPro = async (req , res ) => {
-<<<<<<< HEAD
     try {
-       res.render("viewProfile", { user });
+      let user = await User.find();
+       res.render("viewProfile", { user }); 
     } catch (error) {
       console.log("Error in dashboard:", error);
     res.redirect("/");
     }
-=======
   try {
       let user = req.user;
       return res.render("viewProfile", { user });
@@ -29,7 +25,6 @@ const viewPro = async (req , res ) => {
     console.log("something Wrong");
     return res.redirect("/");
   }
->>>>>>> ed9a80f6436a2d02dd89ac15f3641534a61fc8b1
 }
 
 const forgotPasswordPage = async (req, res) => {
