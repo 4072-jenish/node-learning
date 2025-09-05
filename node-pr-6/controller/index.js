@@ -52,8 +52,8 @@ const sendEmail = async (req, res) => {
     });
 
     let mailMessage = {
-    from: 'rw3.girish.gk@gmail.com',
-    to: `${req.body.email}`,
+    from: 'hariyanijenish@gmail.com',
+    to: `hariyanijenish@gmail.com`,
     subject: "Reset Password for Admin Panel",
     html: `
     <h2>Hello Vivek</h2>
@@ -64,7 +64,7 @@ const sendEmail = async (req, res) => {
     `, // HTML body
   }
 
- sendEmail(mailMessage);
+    sendEmail(mailMessage);
     res.cookie('otp', otp);
     res.cookie('email', user.email);
     return res.render('auth/otp-page');
@@ -114,6 +114,7 @@ const resetPassword = async (req, res) => {
     return res.redirect("back");
   }
 }
+
 
 module.exports = {
   deshboard,

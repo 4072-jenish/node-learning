@@ -1,7 +1,7 @@
 const express = require('express');
 const { addUser, allUser, createUser, delUser, editUser, updateUser } = require('../controller/user.controller');
 const upload = require('../middleware/multerimage');
-const passport = require('passport');
+const passport = require('../middleware/localStratagy');
 const userRouter = express.Router();
 
 userRouter.get('/add-user',passport.authenticate, addUser);
