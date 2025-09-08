@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= blog.title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f9f9f9; padding:20px; }
+    .blog-container { max-width:800px; margin:auto; background:white; padding:20px; border-radius:8px; }
+    .blog-container img { width:100%; max-height:400px; object-fit:cover; border-radius:5px; }
+    .comment-box { margin-top:30px; }
+    .comment { border-bottom:1px solid #eee; padding:10px 0; }
+    .comment strong { display:block; margin-bottom:5px; }
+    textarea { width:100%; height:100px; padding:10px; border-radius:5px; border:1px solid #ccc; }
+    button { margin-top:10px; padding:10px 15px; border:none; border-radius:5px; background:#4F46E5; color:white; cursor:pointer; }
+    button:hover { background:#4338CA; }
+  </style>
+</head>
+<body>
+  <div class="blog-container">
+    <h1><%= blog.title %></h1>
+    <% if (blog.image) { %>
+      <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
+    <% } %>
+    <p style="margin-top:15px;"><%= blog.content %></p>
+    <p><em>Category: <%= blog.category || "General" %></em></p>
+
+    <!-- Comments -->
+    <div class="comment-box">
+      <h3>Comments</h3>
+      <% if (blog.comments && blog.comments.length > 0) { %>
+        <% blog.comments.forEach(c => { %>
+          <div class="comment">
+            <strong><%= c.user %></strong>
+            <p><%= c.comment %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No comments yet. Be the first!</p>
+      <% } %>
+    </div>
+
+    <!-- Add Comment Form -->
+    <% if (user) { %>
+      <form action="/blogs/<%= blog._id %>/comment" method="POST">
+        <textarea name="comment" placeholder="Write your comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+    <% } else { %>
+      <p><a href="/">Login</a> to leave a comment.</p>
+    <% } %>
+  </div>
+</body>
+</html>

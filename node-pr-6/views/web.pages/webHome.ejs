@@ -716,6 +716,9 @@
       <button class="search-btn">
         <i class="fas fa-search"></i> Search
       </button>
+      <a href="webLogin" class="search-btn">
+        <i class="fas fa-user"></i> Login
+      </a>
       <div class="mobile-menu">
         <i class="fas fa-bars"></i>
       </div>
@@ -741,69 +744,69 @@
       <p>Discover our most popular and trending articles</p>
     </div>
     <div class="featured-grid">
-      <!-- Your blog display code integrated here -->
-      <div class="featured-grid">
-        <% if (blogs.length > 0) { %>
-          <% blogs.forEach(blog => { %>
-            <div class="featured-card">
-              <div class="card-img">
-                <% if (blog.image) { %>
-                  <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
-                <% } else { %>
-                  <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
-                <% } %>
-              </div>
-              <div class="card-content">
-                <span class="category"><%= blog.category || 'General' %></span>
-                <h3><%= blog.title %></h3>
-                <p>
-                  <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
-                </p>
-            <div class="card-footer">
-                <div class="author">
-                    <div class="author-img">
-                        <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>"
-                            alt="author">
-                    </div>
-                    <div class="author-info">
-                        <h4>
-                            <%= blog.authName %>
-                        </h4>
-                        <p>
-                            <%= blog.authTitle || 'Writer' %>
-                        </p>
-                    </div>
-                </div>
-            
-                <!-- Comment Button -->
-                <div style="text-align: right; margin-top: 10px;">
-                    <button class="btn btn-sm toggle-comment" data-id="<%= blog._id %>"
-                        style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; border: none; cursor: pointer;">
-                        💬 Comment
-                    </button>
-                </div>
-            
-                <!-- Hidden Comment Form -->
-            </div>
-            <div id="comment-form-<%= blog._id %>" class="comment-form" style="display: none; margin-top: 10px;">
-                <form action="/blogs/<%= blog._id %>/comments" method="POST">
-                    <textarea name="comment" rows="3" placeholder="Write your comment..." required
-                        style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; resize: vertical;"></textarea>
-                    <button type="submit"
-                        style="margin-top: 6px; padding: 6px 12px; border: none; border-radius: 5px; background: #4F46E5; color: white; cursor: pointer;">
-                        Post Comment
-                    </button>
-                </form>
-            </div>
+  <% if (blogs.length > 0) { %>
+    <% blogs.forEach(blog => { %>
+      <div class="featured-card">
+        <div class="card-img">
+          <% if (blog.image) { %>
+            <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
+          <% } else { %>
+            <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
+          <% } %>
+        </div>
+        <div class="card-content">
+          <span class="category"><%= blog.category || 'General' %></span>
+          <h3><%= blog.title %></h3>
+          <p>
+            <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
+          </p>
 
+          <!-- ✅ View More Button -->
+          <div style="margin-top: 10px; text-align: left;">
+            <a href="/blogs/<%= blog._id %>" 
+               class="btn" 
+               style="background: #10b981; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none;">
+              View More
+            </a>
+          </div>
+
+          <div class="card-footer">
+            <div class="author">
+              <div class="author-img">
+                <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
+              </div>
+              <div class="author-info">
+                <h4><%= blog.authName %></h4>
+                <p><%= blog.authTitle || 'Writer' %></p>
               </div>
             </div>
-          <% }) %>
-        <% } else { %>
-          <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
-        <% } %>
+            <div style="text-align: right;">
+              <button class="btn btn-sm toggle-comment" data-id="<%= blog._id %>"
+                style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; border: none; cursor: pointer;">
+                💬 Comment
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden Comment Form -->
+          <div id="comment-form-<%= blog._id %>" class="comment-form" style="display: none; margin-top: 10px;">
+            <form action="/web/comment/<%= blog._id %>" method="POST">
+              <textarea name="comment" rows="3" placeholder="Write your comment..." required
+                style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; resize: vertical;"></textarea>
+              <button type="submit"
+                style="margin-top: 6px; padding: 6px 12px; border: none; border-radius: 5px; background: #4F46E5; color: white; cursor: pointer;">
+                Post Comment
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+    <% }) %>
+  <% } else { %>
+    <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
+  <% } %>
+</div>
+
   </section>
 
   <!-- Newsletter -->
@@ -843,25 +846,28 @@
                   <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
                 </p>
               <div class="card-footer">
-  <div class="author">
-    <div class="author-img">
-      <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
-    </div>
-    <div class="author-info">
-      <h4><%= blog.authName %></h4>
-      <p><%= blog.authTitle || 'Writer' %></p>
-    </div>
-  </div>
-
-  <!-- Comment Button -->
-  <div style="text-align: right; margin-top: 10px;">
-    <a href="/blogs/<%= blog._id %>/comments" class="btn btn-sm" 
-       style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; text-decoration: none;">
-      Comment
-    </a>
-  </div>
-</div>
-
+                <div class="author">
+                  <div class="author-img">
+                    <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
+                  </div>
+                  <div class="author-info">
+                    <h4>
+                      <%= blog.authName %>
+                    </h4>
+                    <p>
+                      <%= blog.authTitle || 'Writer' %>
+                    </p>
+                  </div>
+                </div>
+              
+                <!-- Comment Button -->
+                <div style="text-align: right; margin-top: 10px;">
+                  <a href="/blogs/<%= blog._id %>/comments" class="btn btn-sm"
+                    style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; text-decoration: none;">
+                    Comment
+                  </a>
+                </div>
+              </div>
               </div>
             </div>
           <% }) %>

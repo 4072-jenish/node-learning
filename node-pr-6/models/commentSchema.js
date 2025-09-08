@@ -16,11 +16,13 @@ const commentSchema = new mongoose.Schema(
       required: true, 
       default: "Anonymous"
     },
-    comment: {
-      type: String,
-      required: true,
-      trim: true
+     comments: [
+    {
+      user: String,
+      comment: String,
+      createdAt: { type: Date, default: Date.now }
     }
+  ]
   },
   { timestamps: true } 
 );
