@@ -1,7 +1,5 @@
 const Blog = require('../models/blogSchema');
 const User = require('../models/userSchema');
-
-// ✅ Get all blogs
 const getAllBlogs = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {

@@ -1,0 +1,94 @@
+ body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav {
+      margin-top: 8px;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Blog Cards */
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #555;
+      min-height: 60px;
+    }
+    .author {
+      display: flex;
+      align-items: center;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+    .author img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-left: 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - Blog Site</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .register-container {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #4F46E5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #4338CA;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .login-link a {
+      color: #4F46E5;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Create Account</h2>
+    <form action="/web/registerUser" method="POST" enctype="multipart/form-data">
+      <input type="text" name="name" placeholder="Last Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      
+      <input type="file" name="avatar" accept="image/*" required>
+
+      <button type="submit">Register</button>
+    </form>
+    <div class="login-link">
+      <p>Already registered? <a href="/">Go login</a></p>
+    </div>
+  </div>
+</body>
+</html>

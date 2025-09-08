@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blogosphere - Modern Blog Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #10b981;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --gray: #6b7280;
+      --accent: #f97316;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .search-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-left: 2rem;
+    }
+
+    .search-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1499750310107-5fef28a66643') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Featured Posts */
+    .featured {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .featured-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+
+    .featured-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow);
+    }
+
+    .card-img {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .featured-card:hover .card-img img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .category {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .card-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .card-content p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .author-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .author-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .author-info p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin: 0;
+    }
+
+    .date {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .newsletter-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .newsletter h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter p {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 6px 0 0 6px;
+      font-family: inherit;
+    }
+
+    .newsletter-form button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      border-radius: 0 6px 6px 0;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: #ea580c;
+    }
+
+    /* Blog Section */
+    .blogs {
+      padding: 5rem 2rem;
+      background: var(--light);
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .blog-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* About Section */
+    .about {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .about-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-img {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .about-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 5rem 2rem;
+      background: var(--light);
+    }
+
+    .contact-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-icon {
+      background: var(--primary);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-details h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-details p {
+      color: var(--gray);
+    }
+
+    .contact-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+    }
+
+    .footer-col h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+
+    .footer-col h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .footer-col p {
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: white;
+      opacity: 0.8;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary);
+      padding-left: 5px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .about-content,
+      .contact-content {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .newsletter-form input,
+      .newsletter-form button {
+        width: 100%;
+        border-radius: 6px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 5rem 1.5rem;
+      }
+
+      section {
+        padding: 3rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-blog"></i>
+      <span>Blogosphere</span>
+    </div>
+    <nav>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#featured">Featured</a>
+        <a href="#blogs">Blogs</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="search-btn">
+        <i class="fas fa-search"></i> Search
+      </button>
+      <div class="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2>Discover Stories, Ideas, and Knowledge</h2>
+      <p>Join our community of readers and writers exploring technology, creativity, and personal growth</p>
+      <div class="cta-buttons">
+        <a href="#blogs" class="btn btn-primary">Read Latest Posts</a>
+        <a href="#newsletter" class="btn btn-secondary">Subscribe</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Posts -->
+  <section id="featured" class="featured">
+    <div class="section-header">
+      <h2>Featured Posts</h2>
+      <p>Discover our most popular and trending articles</p>
+    </div>
+    <div class="featured-grid">
+      <!-- Your blog display code integrated here -->
+      <div class="featured-grid">
+        <% if (blogs.length > 0) { %>
+          <% blogs.forEach(blog => { %>
+            <div class="featured-card">
+              <div class="card-img">
+                <% if (blog.image) { %>
+                  <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
+                <% } else { %>
+                  <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
+                <% } %>
+              </div>
+              <div class="card-content">
+                <span class="category"><%= blog.category || 'General' %></span>
+                <h3><%= blog.title %></h3>
+                <p>
+                  <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
+                </p>
+            <div class="card-footer">
+                <div class="author">
+                    <div class="author-img">
+                        <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>"
+                            alt="author">
+                    </div>
+                    <div class="author-info">
+                        <h4>
+                            <%= blog.authName %>
+                        </h4>
+                        <p>
+                            <%= blog.authTitle || 'Writer' %>
+                        </p>
+                    </div>
+                </div>
+            
+                <!-- Comment Button -->
+                <div style="text-align: right; margin-top: 10px;">
+                    <button class="btn btn-sm toggle-comment" data-id="<%= blog._id %>"
+                        style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; border: none; cursor: pointer;">
+                        💬 Comment
+                    </button>
+                </div>
+            
+                <!-- Hidden Comment Form -->
+            </div>
+            <div id="comment-form-<%= blog._id %>" class="comment-form" style="display: none; margin-top: 10px;">
+                <form action="/blogs/<%= blog._id %>/comments" method="POST">
+                    <textarea name="comment" rows="3" placeholder="Write your comment..." required
+                        style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; resize: vertical;"></textarea>
+                    <button type="submit"
+                        style="margin-top: 6px; padding: 6px 12px; border: none; border-radius: 5px; background: #4F46E5; color: white; cursor: pointer;">
+                        Post Comment
+                    </button>
+                </form>
+            </div>
+
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section id="newsletter" class="newsletter">
+    <div class="newsletter-content">
+      <h2>Stay Updated</h2>
+      <p>Subscribe to our newsletter and never miss our latest articles and updates</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blogs" class="blogs">
+    <div class="section-header">
+      <h2>Latest Articles</h2>
+      <p>Explore our most recent publications across various topics</p>
+    </div>
+    <div class="blog-grid">
+      <!-- Additional blog posts would be displayed here -->
+         <% if (blogs.length > 0) { %>
+          <% blogs.forEach(blog => { %>
+            <div class="featured-card">
+              <div class="card-img">
+                <% if (blog.image) { %>
+                  <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
+                <% } else { %>
+                  <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
+                <% } %>
+              </div>
+              <div class="card-content">
+                <span class="category"><%= blog.category || 'General' %></span>
+                <h3><%= blog.title %></h3>
+                <p>
+                  <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
+                </p>
+              <div class="card-footer">
+  <div class="author">
+    <div class="author-img">
+      <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
+    </div>
+    <div class="author-info">
+      <h4><%= blog.authName %></h4>
+      <p><%= blog.authTitle || 'Writer' %></p>
+    </div>
+  </div>
+
+  <!-- Comment Button -->
+  <div style="text-align: right; margin-top: 10px;">
+    <a href="/blogs/<%= blog._id %>/comments" class="btn btn-sm" 
+       style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; text-decoration: none;">
+      Comment
+    </a>
+  </div>
+</div>
+
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
+        <% } %>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="section-header">
+      <h2>About Us</h2>
+      <p>Get to know our mission and values</p>
+    </div>
+    <div class="about-content">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Our Team">
+      </div>
+      <div class="about-text">
+        <h2>We Believe in the Power of Sharing Knowledge</h2>
+        <p>Blogosphere was founded in 2018 with a simple mission: to create a platform where curious minds can share and discover ideas that matter. What started as a small blog has grown into a diverse community of writers and readers passionate about learning.</p>
+        <p>Our content spans technology, personal development, productivity, health, and creative arts. We're committed to providing well-researched, practical, and inspiring content that helps our readers navigate modern life.</p>
+        
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Articles Published</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">120k</div>
+            <div class="stat-label">Monthly Readers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">45</div>
+            <div class="stat-label">Expert Writers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="section-header">
+      <h2>Get In Touch</h2>
+      <p>We'd love to hear from you</p>
+    </div>
+    <div class="contact-content">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="contact-details">
+            <h3>Our Location</h3>
+            <p>123 Blog Street, Content City, Digital State, 10101</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="contact-details">
+            <h3>Email Us</h3>
+            <p>info@blogosphere.com</p>
+            <p>support@blogosphere.com</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <div class="contact-details">
+            <h3>Call Us</h3>
+            <p>+1 (555) 123-4567</p>
+            <p>+1 (555) 987-6543</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="contact-details">
+            <h3>Working Hours</h3>
+            <p>Monday - Friday: 9AM - 5PM</p>
+            <p>Weekend: Limited availability</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form">
+        <h3>Send a Message</h3>
+        <form>
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>Blogosphere</h3>
+        <p>A platform for sharing knowledge, stories, and inspiration with curious minds around the world.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#featured">Featured</a></li>
+          <li><a href="#blogs">Blogs</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="#">Technology</a></li>
+          <li><a href="#">Productivity</a></li>
+          <li><a href="#">Health & Wellness</a></li>
+          <li><a href="#">Personal Development</a></li>
+          <li><a href="#">Creative Arts</a></li>
+          <li><a href="#">Business</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Newsletter</h3>
+        <p>Subscribe to our newsletter to get the latest updates directly in your inbox.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 Blogosphere. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple JavaScript for mobile menu toggle
+    document.querySelector('.mobile-menu').addEventListener('click', function() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+  </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".toggle-comment");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", function () {
+        const blogId = this.getAttribute("data-id");
+        const form = document.getElementById("comment-form-" + blogId);
+
+        if (form.style.display === "none") {
+          form.style.display = "block";
+        } else {
+          form.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
+
+</body>
+</html>

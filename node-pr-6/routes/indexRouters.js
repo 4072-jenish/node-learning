@@ -5,6 +5,7 @@ const { loginPage } = require('../controller/auth.controller');
 const  authRouter  =  require("../routes/authRouter")
 const blogRouter = require('./blogRouter');
 const passport = require('../middleware/localStratagy');
+const webRouter = require('./web.route');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get('/', loginPage)
 router.use('/login', authRouter);
 router.get('/dashboard', passport.checkAuthentication, deshboard);
 router.use('/users', passport.checkAuthentication, userRouter);
+router.use('/web', webRouter);
 router.use('/blogs', passport.checkAuthentication, blogRouter);
 router.use('/profile', passport.checkAuthentication, viewPro);
 router.get("/forgot-password", forgotPasswordPage);
