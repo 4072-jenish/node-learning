@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
       image
     });
 
-    res.redirect("/users/all-user");
+    res.redirect("/users/all-user"); 
   } catch (error) {
     console.error("Error adding user:", error);
   }
