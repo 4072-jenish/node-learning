@@ -27,26 +27,29 @@
     <!-- Comments -->
     <div class="comment-box">
       <h3>Comments</h3>
-      <% if (blog.comments && blog.comments.length > 0) { %>
-        <% blog.comments.forEach(c => { %>
-          <div class="comment">
-            <strong><%= c.user %></strong>
-            <p><%= c.comment %></p>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>No comments yet. Be the first!</p>
-      <% } %>
+     <% if (blog.comments && blog.comments.length > 0) { %>
+  <% blog.comments.forEach(c => { %>
+    <div class="comment">
+      <strong>
+        <% if (c.user && c.user.name) { %>
+          <%= c.user.name %>
+        <% } else { %>
+          Guest
+        <% } %>
+      </strong>: <%= c.comment %>
     </div>
-
+  <% }) %>
+<% } else { %>
+  <p>No comments yet.</p>
+<% } %>
     <!-- Add Comment Form -->
     <% if (user) { %>
-      <form action="/blogs/<%= blog._id %>/comment" method="POST">
+      <form action="/web/comment/<%= blog._id %>" method="POST">
         <textarea name="comment" placeholder="Write your comment..." required></textarea>
         <button type="submit">Post Comment</button>
       </form>
     <% } else { %>
-      <p><a href="/">Login</a> to leave a comment.</p>
+      <p><a href="/web/webLogin">Login</a> to leave a comment.</p>
     <% } %>
   </div>
 </body>

@@ -122,7 +122,7 @@ const updateUser = async (req, res) => {
     await User.findByIdAndUpdate(id, {...req.body, image: imagePath}, {new: true});
     console.log("Update Success");
     req.flash("success", "Update Success"); 
-    return res.redirect("table");
+    return res.redirect("table.ejs");
 
   } catch (error) {
     console.log(error);

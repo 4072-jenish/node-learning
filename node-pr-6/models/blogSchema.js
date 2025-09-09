@@ -46,7 +46,15 @@ const blogSchema = new mongoose.Schema({
     type: String,
     enum: ['Draft', 'Published'],
     default: 'Draft'
+  },
+ comments: [
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'webuser' }, 
+    name: String,
+    comment: String
   }
+]
+
 });
 
 const Blog = mongoose.model('Blog', blogSchema);

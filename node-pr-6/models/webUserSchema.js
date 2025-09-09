@@ -26,4 +26,4 @@ const webUserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("WebUser", webUserSchema);
+module.exports = mongoose.model("webuser", webUserSchema);

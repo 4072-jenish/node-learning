@@ -97,25 +97,23 @@ exports.webLogout = (req, res) => {
 
 exports.viewBlog = async (req, res) => {
   try {
-    const blogId = req.params.id;
-    const blog = await Blog.findById(blogId);
+    const blog = await Blog.findById(req.params.id)
+      .populate("comments.user", "name avatar"); 
 
     if (!blog) {
       return res.status(404).send("Blog not found");
     }
 
-    res.render("web.pages/viewBlog", { blog, user: req.user || null });
+    res.render("web.pages/viewBlog", { blog, user: req.user });
   } catch (error) {
-    console.error("Error loading blog:", error);
-    res.status(500).send("Error loading blog");
+    console.error("Error viewing blog:", error);
+    res.status(500).send("Error viewing blog");
   }
 };
+
+
 exports.addComment = async (req, res) => {
   try {
-    if (!req.isAuthenticated()) {
-      return res.redirect("/webLogin"); 
-    }
-
     const blogId = req.params.id;
     const { comment } = req.body;
 
@@ -125,14 +123,13 @@ exports.addComment = async (req, res) => {
     }
 
     blog.comments.push({
-      user: req.user.name || req.user.email,
-      comment: comment.trim()
+      user: req.user ? req.user._id : null, // link to logged-in user
+      comment
     });
 
     await blog.save();
-    console.log("✅ Comment added to blog:", blogId);
 
-    res.redirect(`/blogs/${blogId}`);
+    res.redirect(`/web/blogs/${blogId}`);
   } catch (error) {
     console.error("Error adding comment:", error);
     res.status(500).send("Error adding comment");
