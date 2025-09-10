@@ -3,9 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/indexRouters'); 
 const database = require('./config/mongoConenction');
-// const passport = require('passport');
-const session = require('express-session')
-// const LocalStrategy = require('./middleware/localStratagy');
+const session = require('express-session');
 const passport = require('./middleware/localStratagy'); 
 const flash = require('connect-flash');
 

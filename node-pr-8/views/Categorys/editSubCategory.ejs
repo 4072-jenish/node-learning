@@ -1,0 +1,28 @@
+<%- include("header") %>
+  <h2>Edit SubCategory</h2>
+
+  <form action="/subcategories/update/<%= subCategory._id %>" method="POST">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" name="name" value="<%= subCategory.name %>" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" class="form-control"><%= subCategory.description %></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Parent Category</label>
+      <select name="category" class="form-control" required>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat._id %>" <%= subCategory.category && subCategory.category._id.toString() === cat._id.toString() ? "selected" : "" %>><%= cat.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/subcategories" class="btn btn-secondary">Back</a>
+  </form>
+
+  <%- include("footer") %>

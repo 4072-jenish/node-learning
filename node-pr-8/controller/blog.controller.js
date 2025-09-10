@@ -17,7 +17,6 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-// ✅ Render Add Blog Form
 const addBlogForm = async (req, res) => {
   try {
     if (!req.isAuthenticated()) {

@@ -1,0 +1,30 @@
+  <%- include("header") %>
+
+  <h2>Edit ExtraCategory</h2>
+
+  <form action="/extracategories/update/<%= extraCategory._id %>" method="POST">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" name="name" value="<%= extraCategory.name %>" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" class="form-control"><%= extraCategory.description %></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">SubCategory</label>
+      <select name="subCategory" class="form-control" required>
+        <% subCategories.forEach(sub => { %>
+          <option value="<%= sub._id %>" <%= extraCategory.subCategory && extraCategory.subCategory._id.toString() === sub._id.toString() ? "selected" : "" %>><%= sub.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/extracategories" class="btn btn-secondary">Back</a>
+  </form>
+
+  <%- include("footer") %>
+

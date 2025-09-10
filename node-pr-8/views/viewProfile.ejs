@@ -1,0 +1,33 @@
+<%- include("header") %>
+<div class="page-wrapper">
+<div class="container mt-5">
+  <div class="card shadow-lg" style="max-width: 700px; margin: auto; border-radius: 12px;">
+    <div class="card-header bg-primary text-white text-center" style="border-radius: 12px 12px 0 0;">
+      <h3>User Profile</h3>
+    </div>
+    <div class="card-body d-flex">
+      <!-- User Image -->
+      <div class="me-4 text-center">
+        <img src="<%= user.image %>" alt="User Image" class="img-fluid rounded-circle border" style="width: 150px; height: 150px; object-fit: cover;">
+      </div>
+
+      <!-- User Details -->
+      <div>
+        <h4><%= user.firstName %> <%= user.lastName %></h4>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Contact:</strong> <%= user.contactNo %></p>
+        <p><strong>Gender:</strong> <%= user.gender %></p>
+        <p><strong>Hobbies:</strong> <%= user.hobbies.join(", ") %></p>
+        <p><strong>Message:</strong> <%= user.message %></p>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <a href="/users/edit-user/<%= user._id %>" class="btn btn-warning btn-sm me-2">Edit</a>
+      <a href="/users/delete-user/<%= user._id %>" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<%- include("footer") %>

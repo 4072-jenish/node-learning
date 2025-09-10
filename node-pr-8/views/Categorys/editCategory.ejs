@@ -1,0 +1,19 @@
+<%- include("header") %>
+  <h2>Edit Category</h2>
+
+  <form action="/categories/update/<%= category._id %>" method="POST">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" name="name" value="<%= category.name %>" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" class="form-control"><%= category.description %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/categories" class="btn btn-secondary">Back</a>
+  </form>
+</body>
+<%- include("footer") %>
