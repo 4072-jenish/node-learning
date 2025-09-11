@@ -24,7 +24,7 @@ router.post("/send-email", sendEmail);
 router.post("/verify-otp", verifyOTP);
 router.post("/reset-password", resetPassword);
 router.use("/categories", categoryRouter);
-router.use("/subcategories", subCategoryRouter);
+router.use("/subCategories", subCategoryRouter);
 router.use("/extracategories", extraCategoryRouter);
 
 

@@ -1,19 +1,26 @@
 const Category = require("../models/categorySchema");
 
-// ✅ Get All Categories
 const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
-    res.render("allCategories", { categories });
+    res.render("categories/allCategories", { categories });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error fetching categories");
   }
 };
 
+const addCategoryForm = (req, res) => {
+  res.render("categories/addCategory"); 
+};
+
 const addCategory = async (req, res) => {
   try {
-    const category = new Category(req.body);
+    const category = new Category({
+      name: req.body.name,
+      image: req.file ? "/uploads/categories/" + req.file.filename : null
+    });
+
     await category.save();
     req.flash("success", "Category added!");
     res.redirect("/categories");
@@ -22,6 +29,7 @@ const addCategory = async (req, res) => {
     res.status(500).send("Error adding category");
   }
 };
+
 
 const editCategoryForm = async (req, res) => {
   try {
@@ -55,6 +63,7 @@ const deleteCategory = async (req, res) => {
 
 module.exports = {
   getAllCategories,
+  addCategoryForm,
   addCategory,
   editCategoryForm,
   updateCategory,

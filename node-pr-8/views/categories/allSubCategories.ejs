@@ -1,0 +1,60 @@
+<%- include("../header") %>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Subcategories</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">All Subcategories</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title m-b-0">All Subcategories</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Subcategory Name</th>
+                                <th>Category</th>
+                                <th>Image</th>
+                                <th colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% subCategory .forEach((sub, index) => { %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= sub.name %></td>
+                                    <td><%= sub.category ? sub.category.name : "No Category" %></td>
+                                    <td>
+                                        <% if (sub.image) { %>
+                                            <img src="<%= sub.image %>" alt="Subcategory Image" width="50">
+                                        <% } else { %>
+                                            No Image
+                                        <% } %>
+                                    </td>
+                                    <td><a href="/subCategories/edit/<%= sub._id %>" class="btn btn-warning btn-sm">Edit</a></td>
+                                    <td><a href="/subCategories/delete/<%= sub._id %>" class="btn btn-danger btn-sm">Delete</a></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../footer") %>
