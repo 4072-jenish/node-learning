@@ -29,7 +29,6 @@
                                 <th>#</th>
                                 <th>Subcategory Name</th>
                                 <th>Category</th>
-                                <th>Image</th>
                                 <th colspan="2">Actions</th>
                             </tr>
                         </thead>
@@ -39,13 +38,6 @@
                                     <td><%= index + 1 %></td>
                                     <td><%= sub.name %></td>
                                     <td><%= sub.category ? sub.category.name : "No Category" %></td>
-                                    <td>
-                                        <% if (sub.image) { %>
-                                            <img src="<%= sub.image %>" alt="Subcategory Image" width="50">
-                                        <% } else { %>
-                                            No Image
-                                        <% } %>
-                                    </td>
                                     <td><a href="/subCategories/edit/<%= sub._id %>" class="btn btn-warning btn-sm">Edit</a></td>
                                     <td><a href="/subCategories/delete/<%= sub._id %>" class="btn btn-danger btn-sm">Delete</a></td>
                                 </tr>

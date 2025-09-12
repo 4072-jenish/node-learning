@@ -1,17 +1,23 @@
 const ExtraCategory = require("../models/extraCategorySchema");
+const Category = require("../models/categorySchema");
+const SubCategory = require("../models/subCategorySchema"); 
 
 const getAllExtraCategories = async (req, res) => {
   try {
-    const extraCategories = await ExtraCategory.find();
+    const extraCategories = await ExtraCategory.find().populate("category").populate("subCategory");
+
     res.render("categories/allExtraCategories", { extraCategories });
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching extra categories:", err);
     res.status(500).send("Error fetching extra categories");
   }
 };
 
-const addExtraCategoryForm = (req, res) => {
-  res.render("categories/addExtraCategory");
+
+const addExtraCategoryForm = async(req, res) => {
+      const categories = await Category.find();
+    const subCategories = await SubCategory.find();
+  res.render("categories/addExtraCategory",  { categories, subCategories });
 };
 
 const addExtraCategory = async (req, res) => {
@@ -22,7 +28,7 @@ const addExtraCategory = async (req, res) => {
 
     await extraCategory.save();
     req.flash("success", "Extra Category added!");
-    res.redirect("/allExtraCategories");
+    res.redirect("/categories/allExtraCategories");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding extra category");

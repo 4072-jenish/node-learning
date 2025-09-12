@@ -31,7 +31,7 @@ const addSubCategory = async (req, res) => {
 
     await subCategory.save();
     req.flash("success", "Subcategory added!");
-    res.redirect("/categories/allSubCategories");
+    res.redirect("categories/allSubCategories");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding subcategory");

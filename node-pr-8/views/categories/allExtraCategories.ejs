@@ -18,41 +18,70 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title m-b-0">All Extra Categories</h5>
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Extra Category Name</th>
-                                <th>Image</th>
-                                <th colspan="2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% extraCategories.forEach((extra, index) => { %>
-                                <tr>
-                                    <td><%= index + 1 %></td>
-                                    <td><%= extra.name %></td>
-                                    <td>
-                                        <% if (extra.image) { %>
-                                            <img src="<%= extra.image %>" alt="Extra Category Image" width="50">
-                                        <% } else { %>
-                                            No Image
-                                        <% } %>
-                                    </td>
-                                    <td><a href="/extraCategories/edit/<%= extra._id %>" class="btn btn-warning btn-sm">Edit</a></td>
-                                    <td><a href="/extraCategories/delete/<%= extra._id %>" class="btn btn-danger btn-sm">Delete</a></td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
+                    <form action="/extraCategories/add" method="POST">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Extra Category</h4>
+
+                            <!-- Extra Category Name -->
+                            <div class="form-group">
+                                <label for="name">Extra Category Name</label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+
+                            <!-- Category Dropdown -->
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" name="category" class="form-control" required>
+                                    <option value="">-- Select Category --</option>
+                                    <% categories.forEach(cat => { %>
+                                        <option value="<%= cat._id %>"><%= cat.name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <!-- SubCategory Dropdown -->
+                            <div class="form-group">
+                                <label for="subCategory">SubCategory</label>
+                                <select id="subCategory" name="subCategory" class="form-control" required>
+                                    <option value="">-- Select SubCategory --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card-body border-top">
+                            <button type="submit" class="btn btn-primary">Add Extra Category</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("category").addEventListener("change", async function () {
+        const categoryId = this.value;
+        const subCategoryDropdown = document.getElementById("subCategory");
+        subCategoryDropdown.innerHTML = "<option value=''>-- Select SubCategory --</option>";
+
+        if (categoryId) {
+            try {
+                const response = await fetch(`/subcategories/byCategory/${categoryId}`);
+                const data = await response.json();
+
+                data.forEach(sub => {
+                    const option = document.createElement("option");
+                    option.value = sub._id;
+                    option.textContent = sub.name;
+                    subCategoryDropdown.appendChild(option);
+                });
+            } catch (err) {
+                console.error("Error fetching subcategories", err);
+            }
+        }
+    });
+</script>
+
 <%- include("../footer") %>

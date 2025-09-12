@@ -18,7 +18,7 @@ const addCategory = async (req, res) => {
   try {
     const category = new Category({
       name: req.body.name,
-      image: req.file ? "/uploads/categories/" + req.file.filename : null
+      image: req.file ? "/uploads/" + req.file.filename : null
     });
 
     await category.save();
@@ -35,7 +35,7 @@ const editCategoryForm = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
     if (!category) return res.redirect("/categories");
-    res.render("editCategory", { category });
+    res.render("categories/editCategory", { category });
   } catch (err) {
     res.status(500).send("Error loading edit form");
   }
