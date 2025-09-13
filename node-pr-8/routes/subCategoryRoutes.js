@@ -9,5 +9,6 @@ subCategoryRouter.post("/add", upload.single("image"), subCategoryController.add
 subCategoryRouter.get("/edit/:id", subCategoryController.editSubCategoryForm);
 subCategoryRouter.post("/update/:id",upload.single("image") , subCategoryController.updateSubCategory);
 subCategoryRouter.get("/delete/:id", subCategoryController.deleteSubCategory);
+subCategoryRouter.get("/byCategory/:categoryId", subCategoryController.getSubCategoriesByCategory);
 
 module.exports = subCategoryRouter;

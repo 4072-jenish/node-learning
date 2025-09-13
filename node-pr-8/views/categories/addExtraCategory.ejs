@@ -3,7 +3,15 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Form Basic</h4>
+                <h4 class="page-title">Extra Categories</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">All Extra Categories</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
@@ -12,53 +20,39 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <form class="form-horizontal" action="/extraCategories/add" method="post">
+                    <form action="/extraCategories/add" method="POST">
                         <div class="card-body">
-                            <h4 class="card-title">Add Extra Category :</h4>
-                            <!-- Select Parent Category -->
-                            <div class="form-group row">
-                                <label class="col-sm-3 text-right control-label col-form-label">Category</label>
-                                <div class="col-sm-9">
-                                    <select name="category" id="category" class="form-control" required>
-                                        <option value="">Select Category</option>
-                                        <% categories.forEach(cat => { %>
-                                            <option value="<%= cat._id %>"><%= cat.name %></option>
-                                        <% }) %>
-                                    </select>
-                                </div>
+                            <h4 class="card-title">Add Extra Category</h4>
+
+                            <!-- Category Dropdown -->
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" name="category" class="form-control" required>
+                                    <option value="">-- Select Category --</option>
+                                    <% categories.forEach(cat => { %>
+                                        <option value="<%= cat._id %>"><%= cat.name %></option>
+                                    <% }) %>
+                                </select>
                             </div>
 
-                            <!-- Select Subcategory -->
-                            <div class="form-group row">
-                                <label class="col-sm-3 text-right control-label col-form-label">Subcategory</label>
-                                <div class="col-sm-9">
-                                    <select name="subCategory" id="subCategory" class="form-control" required>
-                                        <option value="">Select Subcategory</option>
-                                        <% subCategories.forEach(sub => { %>
-                                            <option value="<%= sub._id %>"><%= sub.name %></option>
-                                        <% }) %>
-                                    </select>
-                                </div>
+                            <!-- SubCategory Dropdown -->
+                            <div class="form-group">
+                                <label for="subCategory">SubCategory</label>
+                                <select id="subCategory" name="subCategory" class="form-control" required>
+                                    <option value="">-- Select SubCategory --</option>
+                                </select>
                             </div>
-                            
+
                             <!-- Extra Category Name -->
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-3 text-right control-label col-form-label">
-                                    Extra Category Name
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="name" id="name" class="form-control"
-                                           placeholder="Enter Extra Category Name" required>
-                                </div>
+                            <div class="form-group">
+                                <label for="name">Extra Category Name</label>
+                                <input type="text" name="name" id="name" class="form-control" required>
                             </div>
 
                         </div>
 
-                        <!-- Submit Button -->
-                        <div class="border-top">
-                            <div class="card-body">
-                                <button type="submit" class="btn btn-primary">Add Extra Category</button>
-                            </div>
+                        <div class="card-body border-top">
+                            <button type="submit" class="btn btn-primary">Add Extra Category</button>
                         </div>
                     </form>
                 </div>
@@ -66,4 +60,29 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("category").addEventListener("change", async function () {
+        const categoryId = this.value;
+        const subCategoryDropdown = document.getElementById("subCategory");
+        subCategoryDropdown.innerHTML = "<option value=''>-- Select SubCategory --</option>";
+
+        if (categoryId) {
+            try {
+                const response = await fetch(`/subcategories/byCategory/${categoryId}`);
+                const data = await response.json();
+
+                data.forEach(sub => {
+                    const option = document.createElement("option");
+                    option.value = sub._id;
+                    option.textContent = sub.name;
+                    subCategoryDropdown.appendChild(option);
+                });
+            } catch (err) {
+                console.error("Error fetching subcategories", err);
+            }
+        }
+    });
+</script>
+
 <%- include("../footer") %>

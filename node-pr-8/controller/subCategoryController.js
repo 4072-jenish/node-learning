@@ -1,7 +1,22 @@
 const SubCategory = require("../models/subCategorySchema");
 const Category = require("../models/categorySchema");
+const ExtraCategory = require("../models/extraCategorySchema");
 
-// ✅ Get All Subcategories
+const getByCategory = async (req, res) => {
+  const subs = await SubCategory.find({ category: req.params.categoryId });
+  res.json(subs);
+};
+
+const getSubCategoriesByCategory = async (req, res) => {
+  try {
+    const subCategories = await SubCategory.find({ category: req.params.categoryId });
+    res.json(subCategories);
+  } catch (err) {
+    console.error("Error fetching subcategories by category:", err);
+    res.status(500).json({ error: "Error fetching subcategories" });
+  }
+};
+
   const getAllSubCategories = async (req, res) => {
     try {
       const subCategory   = await SubCategory.find().populate("category");
@@ -72,15 +87,20 @@ const updateSubCategory = async (req, res) => {
 
 const deleteSubCategory = async (req, res) => {
   try {
-    await SubCategory.findByIdAndDelete(req.params.id);
-    req.flash("success", "Subcategory deleted!");
+    const subCategoryId = req.params.id;
+    await ExtraCategory.deleteMany({ subCategory: subCategoryId });
+    await SubCategory.findByIdAndDelete(subCategoryId);
+
+    req.flash("success", "SubCategory and its related ExtraCategories deleted!");
     res.redirect("/subcategories");
   } catch (err) {
+    console.error("Error deleting subcategory:", err.message);
     res.status(500).send("Error deleting subcategory");
   }
 };
 
 module.exports = {
+  getSubCategoriesByCategory,
   getAllSubCategories,
   addSubCategoryForm,
   addSubCategory,

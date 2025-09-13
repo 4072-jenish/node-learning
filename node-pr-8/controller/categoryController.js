@@ -1,4 +1,6 @@
 const Category = require("../models/categorySchema");
+const SubCategory = require("../models/subCategorySchema");
+const ExtraCategory = require("../models/extraCategorySchema");
 
 const getAllCategories = async (req, res) => {
   try {
@@ -53,10 +55,26 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    await Category.findByIdAndDelete(req.params.id);
-    req.flash("success", "Category deleted!");
+    const categoryId = req.params.id;
+
+    // 1. Delete all subcategories linked to this category
+    const subCategories = await SubCategory.find({ category: categoryId });
+
+    // Extract their IDs so we can also delete related extra categories
+    const subCategoryIds = subCategories.map(sub => sub._id);
+
+    await SubCategory.deleteMany({ category: categoryId });
+
+    // 2. Delete all extra categories linked to these subcategories
+    await ExtraCategory.deleteMany({ subCategory: { $in: subCategoryIds } });
+
+    // 3. Finally, delete the category itself
+    await Category.findByIdAndDelete(categoryId);
+
+    req.flash("success", "Category and its related subcategories & extra categories deleted!");
     res.redirect("/categories");
   } catch (err) {
+    console.error("Error deleting category:", err.message);
     res.status(500).send("Error deleting category");
   }
 };

@@ -2,11 +2,15 @@ const ExtraCategory = require("../models/extraCategorySchema");
 const Category = require("../models/categorySchema");
 const SubCategory = require("../models/subCategorySchema"); 
 
+const getBySubCategory = async (req, res) => {
+  const extras = await ExtraCategory.find({ subCategory: req.params.subCategoryId });
+  res.json(extras);
+};
 const getAllExtraCategories = async (req, res) => {
   try {
     const extraCategories = await ExtraCategory.find().populate("category").populate("subCategory");
-
-    res.render("categories/allExtraCategories", { extraCategories });
+      const categories = await Category.find(); 
+    res.render("categories/allExtraCategories", { extraCategories , categories});
   } catch (err) {
     console.error("Error fetching extra categories:", err);
     res.status(500).send("Error fetching extra categories");
@@ -24,13 +28,15 @@ const addExtraCategory = async (req, res) => {
   try {
     const extraCategory = new ExtraCategory({
       name: req.body.name,
+      category: req.body.category,    
+      subCategory: req.body.subCategory  
     });
 
     await extraCategory.save();
     req.flash("success", "Extra Category added!");
-    res.redirect("/categories/allExtraCategories");
+    res.redirect("/extraCategories"); 
   } catch (err) {
-    console.error(err);
+    console.error("Error adding extra category:", err.message);
     res.status(500).send("Error adding extra category");
   }
 };

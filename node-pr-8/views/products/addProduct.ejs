@@ -1,0 +1,81 @@
+<%- include("../header") %>
+<h2>Add Product</h2>
+
+<form action="/products/add" method="POST" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label>Price</label>
+    <input type="number" name="price" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label>Description</label>
+    <textarea name="description" class="form-control"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label>Category</label>
+    <select id="category" name="category" class="form-control" required>
+      <option value="">-- Select Category --</option>
+      <% categories.forEach(cat => { %>
+        <option value="<%= cat._id %>"><%= cat.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>SubCategory</label>
+    <select id="subCategory" name="subCategory" class="form-control" required>
+      <option value="">-- Select SubCategory --</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>ExtraCategory</label>
+    <select id="extraCategory" name="extraCategory" class="form-control" required>
+      <option value="">-- Select ExtraCategory --</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>Image</label>
+    <input type="file" name="image" class="form-control" accept="image/*">
+  </div>
+
+  <button type="submit" class="btn btn-success">Add Product</button>
+  <a href="/products" class="btn btn-secondary">Back</a>
+</form>
+
+<script>
+  // Fetch dependent SubCategories
+  document.getElementById("category").addEventListener("change", async function () {
+    const categoryId = this.value;
+    const res = await fetch(`/subcategories/byCategory/${categoryId}`);
+    const subCategories = await res.json();
+
+    let subSelect = document.getElementById("subCategory");
+    subSelect.innerHTML = "<option value=''>-- Select SubCategory --</option>";
+    subCategories.forEach(sub => {
+      subSelect.innerHTML += `<option value="${sub._id}">${sub.name}</option>`;
+    });
+  });
+
+  // Fetch dependent ExtraCategories
+  document.getElementById("subCategory").addEventListener("change", async function () {
+    const subCategoryId = this.value;
+    const res = await fetch(`/extraCategories/bySubCategory/${subCategoryId}`);
+    const extraCategories = await res.json();
+
+    let extraSelect = document.getElementById("extraCategory");
+    extraSelect.innerHTML = "<option value=''>-- Select ExtraCategory --</option>";
+    extraCategories.forEach(extra => {
+      extraSelect.innerHTML += `<option value="${extra._id}">${extra.name}</option>`;
+    });
+  });
+</script>
+
+<%- include("../footer") %>
