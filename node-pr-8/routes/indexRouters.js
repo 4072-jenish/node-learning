@@ -9,6 +9,7 @@ const webRouter = require('./web.route');
 const categoryRouter = require('./categoryRoutes');
 const subCategoryRouter = require('./subCategoryRoutes');
 const extraCategoryRouter = require('./extraCategoryRoutes');
+const productRouter = require('./productRoutes');
 
 const router = express.Router();
 
@@ -26,6 +27,7 @@ router.post("/reset-password", resetPassword);
 router.use("/categories", categoryRouter);
 router.use("/subCategories", subCategoryRouter);
 router.use("/extracategories", extraCategoryRouter);
+router.use("/products", productRouter);
 
 
 module.exports = router;

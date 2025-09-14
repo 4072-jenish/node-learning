@@ -1,7 +1,7 @@
-const Product = require("../models/Product");
-const Category = require("../models/Category");
-const SubCategory = require("../models/SubCategory");
-const ExtraCategory = require("../models/ExtraCategory");
+const Product = require("../models/productSchema");
+const Category = require("../models/categorySchema");
+const SubCategory = require("../models/subCategorySchema");
+const ExtraCategory = require("../models/extraCategorySchema");
 
 // Show all products
 const getAllProducts = async (req, res) => {

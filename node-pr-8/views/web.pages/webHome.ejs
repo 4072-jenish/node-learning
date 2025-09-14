@@ -1,1077 +1,628 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Blogosphere - Modern Blog Platform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --secondary: #10b981;
-      --dark: #1f2937;
-      --light: #f9fafb;
-      --gray: #6b7280;
-      --accent: #f97316;
-      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --transition: all 0.3s ease;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--light);
-      color: var(--dark);
-      line-height: 1.6;
-    }
-
-    /* Header */
-    header {
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--primary);
-    }
-
-    .logo i {
-      font-size: 1.8rem;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      color: var(--dark);
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .nav-links a:after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover:after {
-      width: 100%;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    .search-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-left: 2rem;
-    }
-
-    .search-btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-    }
-
-    .mobile-menu {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                  url('https://images.unsplash.com/photo-1499750310107-5fef28a66643') center/cover no-repeat;
-      color: white;
-      text-align: center;
-      padding: 8rem 2rem;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .hero h2 {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-    }
-
-    .btn {
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: var(--transition);
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-3px);
-      box-shadow: var(--card-shadow);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: white;
-      border: 2px solid white;
-    }
-
-    .btn-secondary:hover {
-      background: white;
-      color: var(--dark);
-      transform: translateY(-3px);
-      box-shadow: var(--card-shadow);
-    }
-
-    /* Featured Posts */
-    .featured {
-      padding: 5rem 2rem;
-      background: white;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .section-header h2 {
-      font-size: 2.5rem;
-      color: var(--dark);
-      margin-bottom: 1rem;
-    }
-
-    .section-header p {
-      color: var(--gray);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .featured-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .featured-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      transition: var(--transition);
-    }
-
-    .featured-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--card-shadow);
-    }
-
-    .card-img {
-      height: 200px;
-      overflow: hidden;
-    }
-
-    .card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-
-    .featured-card:hover .card-img img {
-      transform: scale(1.05);
-    }
-
-    .card-content {
-      padding: 1.5rem;
-    }
-
-    .category {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .card-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .card-content p {
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-    }
-
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .author {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .author-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    .author-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .author-info h4 {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .author-info p {
-      font-size: 0.8rem;
-      color: var(--gray);
-      margin: 0;
-    }
-
-    .date {
-      font-size: 0.8rem;
-      color: var(--gray);
-    }
-
-    /* Newsletter */
-    .newsletter {
-      background: linear-gradient(to right, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 5rem 2rem;
-      text-align: center;
-    }
-
-    .newsletter-content {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .newsletter h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .newsletter p {
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-
-    .newsletter-form {
-      display: flex;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .newsletter-form input {
-      flex: 1;
-      padding: 0.8rem 1.2rem;
-      border: none;
-      border-radius: 6px 0 0 6px;
-      font-family: inherit;
-    }
-
-    .newsletter-form button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 0 1.5rem;
-      border-radius: 0 6px 6px 0;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .newsletter-form button:hover {
-      background: #ea580c;
-    }
-
-    /* Blog Section */
-    .blogs {
-      padding: 5rem 2rem;
-      background: var(--light);
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .blog-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      transition: var(--transition);
-    }
-
-    .blog-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--card-shadow);
-    }
-
-    /* About Section */
-    .about {
-      padding: 5rem 2rem;
-      background: white;
-    }
-
-    .about-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .about-img {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-    }
-
-    .about-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .about-text h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .about-text p {
-      margin-bottom: 1.5rem;
-      color: var(--gray);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--gray);
-    }
-
-    /* Contact Section */
-    .contact {
-      padding: 5rem 2rem;
-      background: var(--light);
-    }
-
-    .contact-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .contact-icon {
-      background: var(--primary);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .contact-details h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-details p {
-      color: var(--gray);
-    }
-
-    .contact-form {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      font-family: inherit;
-    }
-
-    .form-group textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .submit-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .submit-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--dark);
-      color: white;
-      padding: 4rem 2rem 2rem;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3rem;
-    }
-
-    .footer-col h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.8rem;
-    }
-
-    .footer-col h3:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--primary);
-    }
-
-    .footer-col p {
-      margin-bottom: 1rem;
-      opacity: 0.8;
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-links a {
-      color: white;
-      opacity: 0.8;
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      opacity: 1;
-      color: var(--primary);
-      padding-left: 5px;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      color: white;
-      transition: var(--transition);
-    }
-
-    .social-links a:hover {
-      background: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 3rem;
-      margin-top: 3rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      opacity: 0.7;
-      font-size: 0.9rem;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 992px) {
-      .about-content,
-      .contact-content {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .mobile-menu {
-        display: block;
-      }
-
-      .hero h2 {
-        font-size: 2.2rem;
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .newsletter-form {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .newsletter-form input,
-      .newsletter-form button {
-        width: 100%;
-        border-radius: 6px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 5rem 1.5rem;
-      }
-
-      section {
-        padding: 3rem 1.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexShop | Dark E-Commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-card-hover: #252525;
+            --primary: #8a2be2;
+            --primary-hover: #9b45f0;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --danger: #f44336;
+            --warning: #ff9800;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(30, 30, 30, 0.95);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            border: none;
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .nav-icons a {
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--primary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Filter Section */
+        .filters {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.7rem;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+        }
+
+        .filter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Products Grid */
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .products-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--bg-card-hover);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 3rem;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .wishlist-btn {
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+            border: none;
+            width: 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            background-color: #333;
+            color: var(--danger);
+        }
+
+        /* Cart Preview */
+        .cart-preview {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background-color: var(--bg-card);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-preview.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quantity-btn {
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cart-item-quantity {
+            margin: 0 0.5rem;
+        }
+
+        .remove-item {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #333;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .search-bar {
+                margin: 1rem 0;
+                max-width: 100%;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <i class="fas fa-blog"></i>
-      <span>Blogosphere</span>
-    </div>
-    <nav>
-      <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#featured">Featured</a>
-        <a href="#blogs">Blogs</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <button class="search-btn">
-        <i class="fas fa-search"></i> Search
-      </button>
-      <a href="webLogin" class="search-btn">
-        <i class="fas fa-user"></i> Login
-      </a>
-      <div class="mobile-menu">
-        <i class="fas fa-bars"></i>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h2>Discover Stories, Ideas, and Knowledge</h2>
-      <p>Join our community of readers and writers exploring technology, creativity, and personal growth</p>
-      <div class="cta-buttons">
-        <a href="#blogs" class="btn btn-primary">Read Latest Posts</a>
-        <a href="#newsletter" class="btn btn-secondary">Subscribe</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Posts -->
-  <section id="featured" class="featured">
-    <div class="section-header">
-      <h2>Featured Posts</h2>
-      <p>Discover our most popular and trending articles</p>
-    </div>
-    <div class="featured-grid">
-  <% if (blogs.length > 0) { %>
-    <% blogs.forEach(blog => { %>
-      <div class="featured-card">
-        <div class="card-img">
-          <% if (blog.image) { %>
-            <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
-          <% } else { %>
-            <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
-          <% } %>
+    <!-- Header with search and navigation -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <span>NexShop</span>
         </div>
-        <div class="card-content">
-          <span class="category"><%= blog.category || 'General' %></span>
-          <h3><%= blog.title %></h3>
-          <p>
-            <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
-          </p>
-
-          <!-- ✅ View More Button -->
-          <div style="margin-top: 10px; text-align: left;">
-            <a href="/web/blogs/<%= blog._id %>" 
-               class="btn" 
-               style="background: #10b981; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none;">
-              View More
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for products..." id="searchInput">
+        </div>
+        
+        <div class="nav-icons">
+            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-heart"></i></a>
+            <a href="#" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-          </div>
+        </div>
+    </header>
 
-          <div class="card-footer">
-            <div class="author">
-              <div class="author-img">
-                <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
-              </div>
-              <div class="author-info">
-                <h4><%= blog.authName %></h4>
-                <p><%= blog.authTitle || 'Writer' %></p>
-              </div>
+    <!-- Main content -->
+    <div class="container">
+        <!-- Filters section -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="categoryFilter">Category</label>
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="home">Home & Kitchen</option>
+                    <option value="books">Books</option>
+                </select>
             </div>
-            <div style="text-align: right;">
-              <button class="btn btn-sm toggle-comment" data-id="<%= blog._id %>"
-                style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; border: none; cursor: pointer;">
-                💬 Comment
-              </button>
+            
+            <div class="filter-group">
+                <label for="priceFilter">Price Range</label>
+                <select id="priceFilter">
+                    <option value="all">All Prices</option>
+                    <option value="0-25">Under $25</option>
+                    <option value="25-50">$25 to $50</option>
+                    <option value="50-100">$50 to $100</option>
+                    <option value="100+">Over $100</option>
+                </select>
             </div>
-          </div>
-
-          <!-- Hidden Comment Form -->
-          <div id="comment-form-<%= blog._id %>" class="comment-form" style="display: none; margin-top: 10px;">
-            <form action="/web/comment/<%= blog._id %>" method="POST">
-              <textarea name="comment" rows="3" placeholder="Write your comment..." required
-                style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #ccc; resize: vertical;"></textarea>
-              <button type="submit"
-                style="margin-top: 6px; padding: 6px 12px; border: none; border-radius: 5px; background: #4F46E5; color: white; cursor: pointer;">
-                Post Comment
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    <% }) %>
-  <% } else { %>
-    <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
-  <% } %>
-</div>
-
-  </section>
-
-  <!-- Newsletter -->
-  <section id="newsletter" class="newsletter">
-    <div class="newsletter-content">
-      <h2>Stay Updated</h2>
-      <p>Subscribe to our newsletter and never miss our latest articles and updates</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Enter your email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Blog Section -->
-  <section id="blogs" class="blogs">
-    <div class="section-header">
-      <h2>Latest Articles</h2>
-      <p>Explore our most recent publications across various topics</p>
-    </div>
-    <div class="blog-grid">
-      <!-- Additional blog posts would be displayed here -->
-         <% if (blogs.length > 0) { %>
-          <% blogs.forEach(blog => { %>
-            <div class="featured-card">
-              <div class="card-img">
-                <% if (blog.image) { %>
-                  <img src="/uploads/<%= blog.image %>" alt="<%= blog.title %>">
-                <% } else { %>
-                  <img src="https://via.placeholder.com/400x200?text=No+Image" alt="No Image">
-                <% } %>
-              </div>
-              <div class="card-content">
-                <span class="category"><%= blog.category || 'General' %></span>
-                <h3><%= blog.title %></h3>
-                <p>
-                  <%= blog.content.length > 120 ? blog.content.substring(0, 120) + '...' : blog.content %>
-                </p>
-              <div class="card-footer">
-                <div class="author">
-                  <div class="author-img">
-                    <img src="<%= blog.authImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde' %>" alt="author">
-                  </div>
-                  <div class="author-info">
-                    <h4>
-                      <%= blog.authName %>
-                    </h4>
-                    <p>
-                      <%= blog.authTitle || 'Writer' %>
-                    </p>
-                  </div>
-                </div>
-              
-                <!-- Comment Button -->
-                <div style="text-align: right; margin-top: 10px;">
-                  <a href="/blogs/<%= blog._id %>/comments" class="btn btn-sm"
-                    style="background: #4F46E5; color: white; padding: 4px 6px; border-radius: 5px; text-decoration: none;">
-                    Comment
-                  </a>
-                </div>
-              </div>
-              </div>
+            
+            <div class="filter-group">
+                <label for="ratingFilter">Minimum Rating</label>
+                <select id="ratingFilter">
+                    <option value="0">Any Rating</option>
+                    <option value="4">4 Stars & Up</option>
+                    <option value="3">3 Stars & Up</option>
+                </select>
             </div>
-          <% }) %>
-        <% } else { %>
-          <p style="text-align:center; grid-column: 1 / -1;">No blogs available right now. Check back later!</p>
-        <% } %>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about">
-    <div class="section-header">
-      <h2>About Us</h2>
-      <p>Get to know our mission and values</p>
-    </div>
-    <div class="about-content">
-      <div class="about-img">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Our Team">
-      </div>
-      <div class="about-text">
-        <h2>We Believe in the Power of Sharing Knowledge</h2>
-        <p>Blogosphere was founded in 2018 with a simple mission: to create a platform where curious minds can share and discover ideas that matter. What started as a small blog has grown into a diverse community of writers and readers passionate about learning.</p>
-        <p>Our content spans technology, personal development, productivity, health, and creative arts. We're committed to providing well-researched, practical, and inspiring content that helps our readers navigate modern life.</p>
-        
-        <div class="stats">
-          <div class="stat-item">
-            <div class="stat-number">500+</div>
-            <div class="stat-label">Articles Published</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">120k</div>
-            <div class="stat-label">Monthly Readers</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">45</div>
-            <div class="stat-label">Expert Writers</div>
-          </div>
+            
+            <button class="filter-btn" id="applyFilters">Apply Filters</button>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <div class="section-header">
-      <h2>Get In Touch</h2>
-      <p>We'd love to hear from you</p>
+        <!-- Products section -->
+        <div class="products-header">
+            <h2>Popular Products</h2>
+            <select class="sort-select" id="sortSelect">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+            </select>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically inserted here -->
+        </div>
     </div>
-    <div class="contact-content">
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <div class="contact-details">
-            <h3>Our Location</h3>
-            <p>123 Blog Street, Content City, Digital State, 10101</p>
-          </div>
+
+    <!-- Cart Preview -->
+    <div class="cart-preview" id="cartPreview">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
         </div>
         
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <div class="contact-details">
-            <h3>Email Us</h3>
-            <p>info@blogosphere.com</p>
-            <p>support@blogosphere.com</p>
-          </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically inserted here -->
         </div>
         
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fas fa-phone-alt"></i>
-          </div>
-          <div class="contact-details">
-            <h3>Call Us</h3>
-            <p>+1 (555) 123-4567</p>
-            <p>+1 (555) 987-6543</p>
-          </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
         </div>
-        
-        <div class="contact-item">
-          <div class="contact-icon">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="contact-details">
-            <h3>Working Hours</h3>
-            <p>Monday - Friday: 9AM - 5PM</p>
-            <p>Weekend: Limited availability</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="contact-form">
-        <h3>Send a Message</h3>
-        <form>
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" id="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="message">Your Message</label>
-            <textarea id="message" required></textarea>
-          </div>
-          
-          <button type="submit" class="submit-btn">Send Message</button>
-        </form>
-      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-col">
-        <h3>Blogosphere</h3>
-        <p>A platform for sharing knowledge, stories, and inspiration with curious minds around the world.</p>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#"><i class="fab fa-pinterest"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-col">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#featured">Featured</a></li>
-          <li><a href="#blogs">Blogs</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-col">
-        <h3>Categories</h3>
-        <ul class="footer-links">
-          <li><a href="#">Technology</a></li>
-          <li><a href="#">Productivity</a></li>
-          <li><a href="#">Health & Wellness</a></li>
-          <li><a href="#">Personal Development</a></li>
-          <li><a href="#">Creative Arts</a></li>
-          <li><a href="#">Business</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-col">
-        <h3>Newsletter</h3>
-        <p>Subscribe to our newsletter to get the latest updates directly in your inbox.</p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Your email address" required>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      <p>&copy; 2023 Blogosphere. All Rights Reserved.</p>
-    </div>
-  </footer>
+    <script>
+        // Sample product data - in a real app, this would come from an API
+        const products = [
+            {
+                id: 1,
+                name: "Wireless Headphones",
+                description: "Premium noise-cancelling wireless headphones with 30-hour battery life.",
+                price: 199.99,
+                category: "electronics",
+                rating: 4.5,
+                image: "headphones"
+            },
+            {
+                id: 2,
+                name: "Smart Watch",
+                description: "Feature-rich smartwatch with health monitoring and notifications.",
+                price: 249.99,
+                category: "electronics",
+                rating: 4.2,
+                image: "smartwatch"
+            },
+            {
+                id: 3,
+                name: "Cotton T-Shirt",
+                description: "100% cotton t-shirt available in multiple colors and sizes.",
+                price: 24.99,
+                category: "clothing",
+                rating: 4.0,
+                image: "tshirt"
+            },
+            {
+                id: 4,
+                name: "Coffee Maker",
+                description: "Programmable coffee maker with thermal carafe to keep coffee hot for hours.",
+                price: 89.99,
+                category: "home",
+                rating: 4.7,
+                image: "coffeemaker"
+            },
+            {
+                id: 5,
+                name: "Fantasy Novel",
+                description: "Bestselling fantasy novel with over 1000 pages of adventure.",
+                price: 14.99,
+                category: "books",
+                rating: 4.8,
+                image: "book"
+            },
+            {
+                id: 6,
+                name: "Bluetooth Speaker",
+                description: "Portable waterproof speaker with exceptional sound quality.",
+                price: 79.99,
+                category: "electronics",
+                rating: 4.3,
+                image: "speaker"
+            },
+            {
+                id: 7,
+                name: "Running Shoes",
+                description: "Lightweight running shoes with extra cushioning for comfort.",
+                price: 119.99,
+                category: "clothing",
+                rating: 4.4,
+                image: "shoes"
+            },
+            {
+                id: 8,
+                name: "Desk Lamp",
+                description: "LED desk lamp with adjustable brightness and color temperature.",
+                price: 39.99,
+                category: "home",
+                rating: 4.1,
+                image: "lamp"
+            }
+        ];
 
-  <script>
-    // Simple JavaScript for mobile menu toggle
-    document.querySelector('.mobile-menu').addEventListener('click', function() {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-    });
-  </script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".toggle-comment");
+        // Cart functionality
+        let cart = [];
+        const cartIcon = document.getElementById('cartIcon');
+        const cartPreview = document.getElementById('cartPreview');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartCount = document.querySelector('.cart-count');
 
-    buttons.forEach(button => {
-      button.addEventListener("click", function () {
-        const blogId = this.getAttribute("data-id");
-        const form = document.getElementById("comment-form-" + blogId);
-
-        if (form.style.display === "none") {
-          form.style.display = "block";
-        } else {
-          form.style.display = "none";
-        }
-      });
-    });
-  });
-</script>
-
-
-</body>
-</html>
+        // Toggle cart preview

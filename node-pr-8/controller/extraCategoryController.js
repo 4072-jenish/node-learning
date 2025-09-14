@@ -1,40 +1,58 @@
 const ExtraCategory = require("../models/extraCategorySchema");
 const Category = require("../models/categorySchema");
-const SubCategory = require("../models/subCategorySchema"); 
+const SubCategory = require("../models/subCategorySchema");
 
+// ✅ Get ExtraCategories by SubCategory (for dependent dropdown)
 const getBySubCategory = async (req, res) => {
-  const extras = await ExtraCategory.find({ subCategory: req.params.subCategoryId });
-  res.json(extras);
+  try {
+    const extras = await ExtraCategory.find({ subCategory: req.params.subCategoryId });
+    res.json(extras);
+  } catch (err) {
+    console.error("Error fetching extras by subCategory:", err);
+    res.status(500).json({ error: "Failed to fetch extra categories" });
+  }
 };
+
+// ✅ Get single ExtraCategory by ID (for details display)
+const getById = async (req, res) => {
+  try {
+    const extra = await ExtraCategory.findById(req.params.id);
+    if (!extra) return res.status(404).json({ error: "Extra category not found" });
+    res.json(extra);
+  } catch (err) {
+    console.error("Error fetching extra category:", err);
+    res.status(500).json({ error: "Failed to fetch extra category" });
+  }
+};
+
 const getAllExtraCategories = async (req, res) => {
   try {
     const extraCategories = await ExtraCategory.find().populate("category").populate("subCategory");
-      const categories = await Category.find(); 
-    res.render("categories/allExtraCategories", { extraCategories , categories});
+    const categories = await Category.find();
+    res.render("categories/allExtraCategories", { extraCategories, categories });
   } catch (err) {
     console.error("Error fetching extra categories:", err);
     res.status(500).send("Error fetching extra categories");
   }
 };
 
-
-const addExtraCategoryForm = async(req, res) => {
-      const categories = await Category.find();
-    const subCategories = await SubCategory.find();
-  res.render("categories/addExtraCategory",  { categories, subCategories });
+const addExtraCategoryForm = async (req, res) => {
+  const categories = await Category.find();
+  const subCategories = await SubCategory.find();
+  res.render("categories/addExtraCategory", { categories, subCategories });
 };
 
 const addExtraCategory = async (req, res) => {
   try {
     const extraCategory = new ExtraCategory({
       name: req.body.name,
-      category: req.body.category,    
-      subCategory: req.body.subCategory  
+      category: req.body.category,
+      subCategory: req.body.subCategory
     });
 
     await extraCategory.save();
     req.flash("success", "Extra Category added!");
-    res.redirect("/extraCategories"); 
+    res.redirect("/extraCategories");
   } catch (err) {
     console.error("Error adding extra category:", err.message);
     res.status(500).send("Error adding extra category");
@@ -54,9 +72,6 @@ const editExtraCategoryForm = async (req, res) => {
 const updateExtraCategory = async (req, res) => {
   try {
     const updateData = { name: req.body.name };
-    if (req.file) {
-      updateData.image = "/uploads/extraCategories/" + req.file.filename;
-    }
 
     await ExtraCategory.findByIdAndUpdate(req.params.id, updateData);
     req.flash("success", "Extra Category updated!");
@@ -82,5 +97,7 @@ module.exports = {
   addExtraCategory,
   editExtraCategoryForm,
   updateExtraCategory,
-  deleteExtraCategory
+  deleteExtraCategory,
+  getBySubCategory,   // ✅ added
+  getById             // ✅ added
 };

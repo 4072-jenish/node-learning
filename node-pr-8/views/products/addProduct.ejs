@@ -1,54 +1,100 @@
 <%- include("../header") %>
-<h2>Add Product</h2>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Form Basic</h4>
+            </div>
+        </div>
+    </div>
 
-<form action="/products/add" method="POST" enctype="multipart/form-data">
-  <div class="mb-3">
-    <label>Name</label>
-    <input type="text" name="name" class="form-control" required>
-  </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <form class="form-horizontal" action="/products/add" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Product :</h4>
 
-  <div class="mb-3">
-    <label>Price</label>
-    <input type="number" name="price" class="form-control" required>
-  </div>
+                            <!-- Product Name -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="name" class="form-control" placeholder="Enter Product Name" required>
+                                </div>
+                            </div>
 
-  <div class="mb-3">
-    <label>Description</label>
-    <textarea name="description" class="form-control"></textarea>
-  </div>
+                            <!-- Price -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Price</label>
+                                <div class="col-sm-9">
+                                    <input type="number" name="price" class="form-control" placeholder="Enter Product Price" required>
+                                </div>
+                            </div>
 
-  <div class="mb-3">
-    <label>Category</label>
-    <select id="category" name="category" class="form-control" required>
-      <option value="">-- Select Category --</option>
-      <% categories.forEach(cat => { %>
-        <option value="<%= cat._id %>"><%= cat.name %></option>
-      <% }) %>
-    </select>
-  </div>
+                            <!-- Description -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea name="description" class="form-control" rows="4" placeholder="Enter Product Description"></textarea>
+                                </div>
+                            </div>
 
-  <div class="mb-3">
-    <label>SubCategory</label>
-    <select id="subCategory" name="subCategory" class="form-control" required>
-      <option value="">-- Select SubCategory --</option>
-    </select>
-  </div>
+                            <!-- Category -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                <div class="col-sm-9">
+                                    <select id="category" name="category" class="form-control" required>
+                                        <option value="">-- Select Category --</option>
+                                        <% categories.forEach(cat => { %>
+                                            <option value="<%= cat._id %>"><%= cat.name %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
 
-  <div class="mb-3">
-    <label>ExtraCategory</label>
-    <select id="extraCategory" name="extraCategory" class="form-control" required>
-      <option value="">-- Select ExtraCategory --</option>
-    </select>
-  </div>
+                            <!-- SubCategory -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">SubCategory</label>
+                                <div class="col-sm-9">
+                                    <select id="subCategory" name="subCategory" class="form-control" required>
+                                        <option value="">-- Select SubCategory --</option>
+                                    </select>
+                                </div>
+                            </div>
 
-  <div class="mb-3">
-    <label>Image</label>
-    <input type="file" name="image" class="form-control" accept="image/*">
-  </div>
+                            <!-- ExtraCategory -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">ExtraCategory</label>
+                                <div class="col-sm-9">
+                                    <select id="extraCategory" name="extraCategory" class="form-control" required>
+                                        <option value="">-- Select ExtraCategory --</option>
+                                    </select>
+                                </div>
+                            </div>
 
-  <button type="submit" class="btn btn-success">Add Product</button>
-  <a href="/products" class="btn btn-secondary">Back</a>
-</form>
+                            <!-- Image -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Product Image</label>
+                                <div class="col-sm-9">
+                                    <input type="file" name="image" class="form-control" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-success">Add Product</button>
+                                <a href="/products" class="btn btn-secondary">Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
   // Fetch dependent SubCategories
@@ -62,6 +108,9 @@
     subCategories.forEach(sub => {
       subSelect.innerHTML += `<option value="${sub._id}">${sub.name}</option>`;
     });
+
+    document.getElementById("extraCategory").innerHTML = "<option value=''>-- Select ExtraCategory --</option>";
+    document.getElementById("extraDetails").style.display = "none";
   });
 
   // Fetch dependent ExtraCategories
@@ -75,6 +124,25 @@
     extraCategories.forEach(extra => {
       extraSelect.innerHTML += `<option value="${extra._id}">${extra.name}</option>`;
     });
+
+    document.getElementById("extraDetails").style.display = "none";
+  });
+
+  // Show ExtraCategory Details on selection
+  document.getElementById("extraCategory").addEventListener("change", async function () {
+    const extraId = this.value;
+    if (!extraId) {
+      document.getElementById("extraDetails").style.display = "none";
+      return;
+    }
+
+    const res = await fetch(`/extraCategories/${extraId}`);
+    const extra = await res.json();
+
+    document.getElementById("extraName").innerHTML = `<b>Name:</b> ${extra.name}`;
+    document.getElementById("extraDesc").innerHTML = `<b>Description:</b> ${extra.description || "No description"}`;
+
+    document.getElementById("extraDetails").style.display = "block";
   });
 </script>
 
