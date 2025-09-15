@@ -1,0 +1,275 @@
+<%- include("../header") %>
+<style>
+     .author-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .author-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .author-info p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin: 0;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Tables</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Library</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="container mt-4">
+                        <h1 class="mb-4">All products</h1>
+                        <a href="/products/add" class="btn btn-primary mb-4">Add New products</a>
+                        
+                        <div class="row">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #6c757d;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem 0;
+            color: var(--dark-text);
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .products-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+            background: white;
+            height: 100%;
+            box-shadow: var(--card-shadow);
+        }
+
+        .products-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-img-container {
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+       .card-img-top {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: all 0.3s ease;
+       }
+
+        .products-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark-text);
+            line-height: 1.4;
+        }
+
+        .card-text {
+            color: var(--light-text);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .author-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid #e9ecef;
+        }
+
+        .author-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+        .author-info p {
+            font-size: 0.8rem;
+            color: var(--light-text);
+            margin-bottom: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #e9ecef;
+            padding-top: 1rem;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-edit {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--accent-color);
+            border: none;
+        }
+
+        .btn-delete:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card-img-container {
+                height: 200px;
+            }
+            
+            .col-md-4 {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="row">
+        <% products.forEach(product => { %>
+        <div class="col-md-4">
+            <div class="card products-card">
+                <div class="card-img-container">
+                    <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= product.name %></h5>
+                    <p class="card-text" style="min-height: 80px;">
+                        <%= product.description && product.description.length > 100 
+                            ? product.description.substring(0, 100) + '...' 
+                            : (product.description || "No description") %>
+                    </p>
+                    <div class="author-container">
+                        <span><b>Price:</b> $<%= product.price || 0 %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>  
+<%- include("../footer") %>

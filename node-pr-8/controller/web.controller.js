@@ -1,5 +1,5 @@
 const passport = require('../middleware/localStratagy');
-const Blog = require('../models/blogSchema');
+const Product = require('../models/productSchema');
 const User = require('../models/userSchema');
 const webUser = require('../models/webUserSchema');
 
@@ -14,12 +14,11 @@ exports.webLoginPage = async( req , res ) => {
 }
 exports.webPage = async (req , res) => {
     try {
-        
-    const blogs = await Blog.find();
+    const product = await Product.find();    
     const user = await User.find();
-    console.log(blogs);
+    console.log(product);
     
-     res.render('web.pages/webHome', { blogs , user});
+     res.render('web.pages/webHome', { product , user});
      console.log("Page Render success ..... : )");
     } catch (error) {
     console.log(error);

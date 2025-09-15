@@ -38,7 +38,7 @@ const addProduct = async (req, res) => {
       category: req.body.category,
       subCategory: req.body.subCategory,
       extraCategory: req.body.extraCategory,
-      image: req.file ? "/uploads/products/" + req.file.filename : null,
+      image: req.file ? "/uploads/" + req.file.filename : null,
     });
 
     await product.save();
@@ -78,7 +78,7 @@ const updateProduct = async (req, res) => {
     };
 
     if (req.file) {
-      updateData.image = "/uploads/products/" + req.file.filename;
+      updateData.image = "/uploads/" + req.file.filename;
     }
 
     await Product.findByIdAndUpdate(req.params.id, updateData);
