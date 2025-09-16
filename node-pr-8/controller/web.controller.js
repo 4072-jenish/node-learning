@@ -2,6 +2,7 @@ const passport = require('../middleware/localStratagy');
 const Product = require('../models/productSchema');
 const User = require('../models/userSchema');
 const webUser = require('../models/webUserSchema');
+const Category = require('../models/categorySchema');
 
 exports.webLoginPage = async( req , res ) => {
     try {
@@ -16,9 +17,8 @@ exports.webPage = async (req , res) => {
     try {
     const product = await Product.find();    
     const user = await User.find();
-    console.log(product);
-    
-     res.render('web.pages/webHome', { product , user});
+    const category = await Category.find();
+     res.render('web.pages/webHome', { product , user , category});
      console.log("Page Render success ..... : )");
     } catch (error) {
     console.log(error);
@@ -73,8 +73,8 @@ exports.webLoginUser = (req, res, next) => {
       if (err) return next(err);
 
       try {
-        const blogs = await Blog.find();
-        return res.render("web.pages/webHome", { blogs, user });
+        const product = await Product.find();
+        return res.render("web.pages/webHome", { product, user });
       } catch (error) {
         console.error("Error loading blogs:", error);
         return res.redirect("/webLogin");
@@ -134,3 +134,7 @@ exports.addComment = async (req, res) => {
     res.status(500).send("Error adding comment");
   }
 };
+
+exports.addTocart = async (req, res) => {
+  
+}

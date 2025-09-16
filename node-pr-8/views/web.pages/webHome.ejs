@@ -113,6 +113,124 @@
             align-items: center;
         }
 
+        /* Carousel Styles */
+        .carousel {
+            margin: 1.5rem auto;
+            max-width: 1200px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .carousel-caption h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .carousel-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .carousel-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-indicator.active {
+            background-color: var(--primary);
+        }
+
         /* Main Content */
         .container {
             max-width: 1200px;
@@ -207,15 +325,25 @@
         }
 
         .product-image {
-            height: 200px;
             width: 100%;
-            object-fit: cover;
+            height: 220px;    
             background-color: #2a2a2a;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-secondary);
-            font-size: 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;   
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
 
         .product-info {
@@ -427,6 +555,18 @@
                 max-width: 100%;
             }
             
+            .carousel {
+                height: 200px;
+            }
+            
+            .carousel-caption h3 {
+                font-size: 1.2rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 0.9rem;
+            }
+            
             .filters {
                 flex-direction: column;
                 align-items: stretch;
@@ -443,20 +583,18 @@
     </style>
 </head>
 <body>
-    <!-- Header with search and navigation -->
+    <!-- Header -->
     <header>
         <div class="logo">
             <i class="fas fa-store"></i>
             <span>NexShop</span>
         </div>
-        
         <div class="search-bar">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search for products..." id="searchInput">
         </div>
-        
         <div class="nav-icons">
-            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="/web/webLogin"><i class="fas fa-user"></i></a>
             <a href="#"><i class="fas fa-heart"></i></a>
             <a href="#" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
@@ -465,32 +603,72 @@
         </div>
     </header>
 
-    <!-- Main content -->
-    <div class="container">
-        <!-- Filters section -->
-        <div class="filters">
-            <div class="filter-group">
-                <label for="categoryFilter">Category</label>
-                <select id="categoryFilter">
-                    <option value="all">All Categories</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing</option>
-                    <option value="home">Home & Kitchen</option>
-                    <option value="books">Books</option>
-                </select>
+    <!-- Carousel -->
+    <div class="carousel">
+        <div class="carousel-inner" id="carouselInner">
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Summer Sale">
+                <div class="carousel-caption">
+                    <h3>Summer Sale</h3>
+                    <p>Up to 50% off on selected items</p>
+                    <button class="carousel-btn">Shop Now</button>
+                </div>
             </div>
-            
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1555529771-7888783a18d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="New Arrivals">
+                <div class="carousel-caption">
+                    <h3>New Arrivals</h3>
+                    <p>Check out our latest products</p>
+                    <button class="carousel-btn">Discover</button>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1608506375591-b91b98fe3185?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Free Shipping">
+                <div class="carousel-caption">
+                    <h3>Free Shipping</h3>
+                    <p>On all orders over ₹999</p>
+                    <button class="carousel-btn">Learn More</button>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="carousel-control" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-control" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="carousel-indicators" id="carouselIndicators">
+            <button class="carousel-indicator active"></button>
+            <button class="carousel-indicator"></button>
+            <button class="carousel-indicator"></button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="container">
+        <!-- Filters -->
+        <div class="filters">
+           <div class="filter-group">
+    <label for="categoryFilter">Category</label>
+    <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <% category.forEach(cat => { %>
+            <option value="<%= cat._id %>"><%= cat.name %></option>
+        <% }) %>
+    </select>
+</div>
             <div class="filter-group">
                 <label for="priceFilter">Price Range</label>
                 <select id="priceFilter">
                     <option value="all">All Prices</option>
-                    <option value="0-25">Under $25</option>
-                    <option value="25-50">$25 to $50</option>
-                    <option value="50-100">$50 to $100</option>
-                    <option value="100+">Over $100</option>
+                    <option value="0-25">Under ₹25</option>
+                    <option value="25-50">₹25 to ₹50</option>
+                    <option value="50-100">₹50 to ₹100</option>
+                    <option value="100+">Over ₹100</option>
                 </select>
             </div>
-            
             <div class="filter-group">
                 <label for="ratingFilter">Minimum Rating</label>
                 <select id="ratingFilter">
@@ -499,352 +677,196 @@
                     <option value="3">3 Stars & Up</option>
                 </select>
             </div>
-            
             <button class="filter-btn" id="applyFilters">Apply Filters</button>
         </div>
 
-        <!-- Products section -->
-        <div class="products-header">
-            <h2>Popular Products</h2>
-            <select class="sort-select" id="sortSelect">
-                <option value="featured">Featured</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="rating">Top Rated</option>
-            </select>
-        </div>
-
         <div class="products-grid" id="productsGrid">
-            <!-- Products will be dynamically inserted here -->
-        </div>
-    </div>
-
-    <!-- Cart Preview -->
-    <div class="cart-preview" id="cartPreview">
-        <div class="cart-header">
-            <h3>Your Cart</h3>
-            <button class="close-cart" id="closeCart">&times;</button>
-        </div>
-        
-        <div class="cart-items" id="cartItems">
-            <!-- Cart items will be dynamically inserted here -->
-        </div>
-        
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cartTotal">$0.00</span>
-            </div>
-            <button class="checkout-btn">Proceed to Checkout</button>
-        </div>
-    </div>
-
-    <script>
-        // Sample product data - in a real app, this would come from an API
-        const products = [
-            {
-                id: 1,
-                name: "Wireless Headphones",
-                description: "Premium noise-cancelling wireless headphones with 30-hour battery life.",
-                price: 199.99,
-                category: "electronics",
-                rating: 4.5,
-                image: "headphones"
-            },
-            {
-                id: 2,
-                name: "Smart Watch",
-                description: "Feature-rich smartwatch with health monitoring and notifications.",
-                price: 249.99,
-                category: "electronics",
-                rating: 4.2,
-                image: "smartwatch"
-            },
-            {
-                id: 3,
-                name: "Cotton T-Shirt",
-                description: "100% cotton t-shirt available in multiple colors and sizes.",
-                price: 24.99,
-                category: "clothing",
-                rating: 4.0,
-                image: "tshirt"
-            },
-            {
-                id: 4,
-                name: "Coffee Maker",
-                description: "Programmable coffee maker with thermal carafe to keep coffee hot for hours.",
-                price: 89.99,
-                category: "home",
-                rating: 4.7,
-                image: "coffeemaker"
-            },
-            {
-                id: 5,
-                name: "Fantasy Novel",
-                description: "Bestselling fantasy novel with over 1000 pages of adventure.",
-                price: 14.99,
-                category: "books",
-                rating: 4.8,
-                image: "book"
-            },
-            {
-                id: 6,
-                name: "Bluetooth Speaker",
-                description: "Portable waterproof speaker with exceptional sound quality.",
-                price: 79.99,
-                category: "electronics",
-                rating: 4.3,
-                image: "speaker"
-            },
-            {
-                id: 7,
-                name: "Running Shoes",
-                description: "Lightweight running shoes with extra cushioning for comfort.",
-                price: 119.99,
-                category: "clothing",
-                rating: 4.4,
-                image: "shoes"
-            },
-            {
-                id: 8,
-                name: "Desk Lamp",
-                description: "LED desk lamp with adjustable brightness and color temperature.",
-                price: 39.99,
-                category: "home",
-                rating: 4.1,
-                image: "lamp"
-            }
-        ];
-
-        // Cart functionality
-        let cart = [];
-        const cartIcon = document.getElementById('cartIcon');
-        const cartPreview = document.getElementById('cartPreview');
-        const closeCart = document.getElementById('closeCart');
-        const cartItems = document.getElementById('cartItems');
-        const cartTotal = document.getElementById('cartTotal');
-        const cartCount = document.querySelector('.cart-count');
-
-        // Toggle cart preview
-        cartIcon.addEventListener('click', function(e) {
-            e.preventDefault();
-            cartPreview.classList.add('open');
-        });
-
-        closeCart.addEventListener('click', function() {
-            cartPreview.classList.remove('open');
-        });
-
-        // Render products
-        function renderProducts(productsToRender) {
-            const productsGrid = document.getElementById('productsGrid');
-            productsGrid.innerHTML = '';
-            
-            productsToRender.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                
-                // Generate star rating HTML
-                let starsHtml = '';
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= Math.floor(product.rating)) {
-                        starsHtml += '<i class="fas fa-star"></i>';
-                    } else if (i - 0.5 <= product.rating) {
-                        starsHtml += '<i class="fas fa-star-half-alt"></i>';
-                    } else {
-                        starsHtml += '<i class="far fa-star"></i>';
-                    }
-                }
-                
-                productCard.innerHTML = `
+            <% product.forEach(product => { %>
+                <div class="product-card">
                     <div class="product-image">
-                        <i class="fas fa-${product.image}"></i>
+                        <img class="product-image" src="<%= product.image %>" />
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <h3 class="product-title"><%= product.name %></h3>
+                           <p class="card-text product-description">
+                               <%= product.description && product.description.length > 200 
+                                   ? product.description.substring(0, 200) + '...' 
+                                   : product.description %>
+                           </p>
+                        <div class="product-price">₹<%= product.price.toFixed(2) %></div>
                         <div class="product-rating">
-                            ${starsHtml} <span>(${product.rating})</span>
+                            <% for(let i = 1; i <= 5; i++){ %>
+                                <% if(i <= Math.floor(product.rating)){ %>
+                                    <i class="fas fa-star"></i>
+                                <% } else if(i - 0.5 <= product.rating){ %>
+                                    <i class="fas fa-star-half-alt"></i>
+                                <% } else { %>
+                                    <i class="far fa-star"></i>
+                                <% } %>
+                            <% } %>
+                            <span>(<%= product.rating %>)</span>
                         </div>
                         <div class="product-actions">
-                            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+                            <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
                             <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
-                `;
-                
-                productsGrid.appendChild(productCard);
-            });
-            
-            // Add event listeners to Add to Cart buttons
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = parseInt(this.getAttribute('data-id'));
-                    addToCart(productId);
-                });
-            });
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Cart Preview --> 
+  <div class="cart-preview" id="cartPreview">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotal">₹0.00</span>
+      </div>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+    <script>
+    // ================= Carousel =================
+    const carouselInner = document.getElementById("carouselInner");
+    const carouselItems = document.querySelectorAll(".carousel-item");
+    const indicators = document.querySelectorAll(".carousel-indicator");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentIndex = 0;
+    const totalItems = carouselItems.length;
+
+    function updateCarousel() {
+      carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle("active", index === currentIndex);
+      });
+    }
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalItems;
+      updateCarousel();
+    }
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateCarousel();
+    }
+    nextBtn.addEventListener("click", nextSlide);
+    prevBtn.addEventListener("click", prevSlide);
+    indicators.forEach((ind, i) =>
+      ind.addEventListener("click", () => {
+        currentIndex = i;
+        updateCarousel();
+      })
+    );
+    setInterval(nextSlide, 5000);
+
+    // ================= Filters =================
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const priceFilter = document.getElementById("priceFilter");
+    const ratingFilter = document.getElementById("ratingFilter");
+    const applyFilters = document.getElementById("applyFilters");
+    const productsGrid = document.getElementById("productsGrid");
+    const productCards = productsGrid.querySelectorAll(".product-card");
+
+    function applyProductFilters() {
+      const searchValue = searchInput.value.toLowerCase();
+      const categoryValue = categoryFilter.value;
+      const priceValue = priceFilter.value;
+      const ratingValue = parseFloat(ratingFilter.value);
+
+      productCards.forEach(card => {
+        const name = card.dataset.name;
+        const category = card.dataset.category;
+        const price = parseFloat(card.dataset.price);
+        const rating = parseFloat(card.dataset.rating);
+
+        let show = true;
+
+        // search filter
+        if (searchValue && !name.includes(searchValue)) {
+          show = false;
+        }
+        // category filter
+        if (categoryValue !== "all" && category !== categoryValue) {
+          show = false;
+        }
+        // price filter
+        if (priceValue !== "all") {
+          if (priceValue === "0-25" && !(price < 25)) show = false;
+          if (priceValue === "25-50" && !(price >= 25 && price <= 50)) show = false;
+          if (priceValue === "50-100" && !(price >= 50 && price <= 100)) show = false;
+          if (priceValue === "100+" && !(price > 100)) show = false;
+        }
+        // rating filter
+        if (rating < ratingValue) {
+          show = false;
         }
 
-        // Add to cart function
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-            cartPreview.classList.add('open');
-        }
+        card.style.display = show ? "flex" : "none";
+      });
+    }
 
-        // Update cart function
-        function updateCart() {
-            cartItems.innerHTML = '';
-            let total = 0;
-            let count = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                count += item.quantity;
-                
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-image">
-                        <i class="fas fa-${item.image}"></i>
-                    </div>
-                    <div class="cart-item-details">
-                        <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        <div class="cart-item-actions">
-                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                            <span class="cart-item-quantity">${item.quantity}</span>
-                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                            <button class="remove-item" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                cartItems.appendChild(cartItem);
-            });
-            
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-            cartCount.textContent = count;
-            
-            // Add event listeners to cart item buttons
-            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    const item = cart.find(item => item.id === id);
-                    item.quantity += 1;
-                    updateCart();
-                });
-            });
-            
-            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    const item = cart.find(item => item.id === id);
-                    if (item.quantity > 1) {
-                        item.quantity -= 1;
-                    } else {
-                        cart = cart.filter(item => item.id !== id);
-                    }
-                    updateCart();
-                });
-            });
-            
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    cart = cart.filter(item => item.id !== id);
-                    updateCart();
-                });
-            });
-        }
+    applyFilters.addEventListener("click", applyProductFilters);
+    searchInput.addEventListener("input", applyProductFilters);
 
-        // Filter and sort functionality
-        document.getElementById('applyFilters').addEventListener('click', function() {
-            filterAndSortProducts();
+    // ================= Cart =================
+       // ================= Cart =================
+    let cart = [];
+    const cartIcon = document.getElementById("cartIcon");
+    const cartPreview = document.getElementById("cartPreview");
+    const closeCart = document.getElementById("closeCart");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartCount = document.querySelector(".cart-count");
+
+    function renderCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - $${item.price}`;
+        cartItems.appendChild(li);
+        total += item.price;
+      });
+
+      cartTotal.textContent = total.toFixed(2);
+      cartCount.textContent = cart.length;
+    }
+
+    // Open/close cart drawer
+    if (cartIcon) {
+      cartIcon.addEventListener("click", e => {
+        e.preventDefault();
+        cartPreview.classList.add("open");
+      });
+    }
+    if (closeCart) {
+      closeCart.addEventListener("click", () => {
+        cartPreview.classList.remove("open");
+      });
+    }
+
+    // Attach add-to-cart buttons
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        const card = btn.closest(".product-card");
+        cart.push({
+          name: card.dataset.name,
+          price: parseFloat(card.dataset.price) || 0
         });
-
-        document.getElementById('sortSelect').addEventListener('change', function() {
-            filterAndSortProducts();
-        });
-
-        function filterAndSortProducts() {
-            const category = document.getElementById('categoryFilter').value;
-            const priceRange = document.getElementById('priceFilter').value;
-            const minRating = parseFloat(document.getElementById('ratingFilter').value);
-            const sortBy = document.getElementById('sortSelect').value;
-            
-            let filteredProducts = [...products];
-            
-            // Apply category filter
-            if (category !== 'all') {
-                filteredProducts = filteredProducts.filter(product => product.category === category);
-            }
-            
-            // Apply price filter
-            if (priceRange !== 'all') {
-                if (priceRange === '0-25') {
-                    filteredProducts = filteredProducts.filter(product => product.price < 25);
-                } else if (priceRange === '25-50') {
-                    filteredProducts = filteredProducts.filter(product => product.price >= 25 && product.price < 50);
-                } else if (priceRange === '50-100') {
-                    filteredProducts = filteredProducts.filter(product => product.price >= 50 && product.price < 100);
-                } else if (priceRange === '100+') {
-                    filteredProducts = filteredProducts.filter(product => product.price >= 100);
-                }
-            }
-            
-            // Apply rating filter
-            if (minRating > 0) {
-                filteredProducts = filteredProducts.filter(product => product.rating >= minRating);
-            }
-            
-            // Apply sorting
-            if (sortBy === 'price-low') {
-                filteredProducts.sort((a, b) => a.price - b.price);
-            } else if (sortBy === 'price-high') {
-                filteredProducts.sort((a, b) => b.price - a.price);
-            } else if (sortBy === 'rating') {
-                filteredProducts.sort((a, b) => b.rating - a.rating);
-            }
-            
-            renderProducts(filteredProducts);
-        }
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            if (searchTerm.length > 2) {
-                const filteredProducts = products.filter(product => 
-                    product.name.toLowerCase().includes(searchTerm) || 
-                    product.description.toLowerCase().includes(searchTerm)
-                );
-                renderProducts(filteredProducts);
-            } else if (searchTerm.length === 0) {
-                renderProducts(products);
-            }
-        });
-
-        // Initialize the page
-        renderProducts(products);
-    </script>
+        renderCart();
+      });
+    });
+  </script>
 </body>
 </html>
