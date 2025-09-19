@@ -27,9 +27,9 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Extra Category Name</th>
                 <th>Main Category</th>
                 <th>Sub Category</th>
+                <th>Extra Category Name</th>
                 <th colspan="2">Actions</th>
               </tr>
             </thead>
@@ -38,9 +38,9 @@
                 <% extraCategories.forEach((extra, index) => { %>
                   <tr>
                     <td><%= index + 1 %></td>
-                    <td><%= extra.name %></td>
                     <td><%= extra.category ? extra.category.name : "—" %></td>
                     <td><%= extra.subCategory ? extra.subCategory.name : "—" %></td>
+                    <td><%= extra.name %></td>
                     <td>
                       <a href="/extraCategories/edit/<%= extra._id %>" class="btn btn-warning btn-sm">Edit</a>
                     </td>

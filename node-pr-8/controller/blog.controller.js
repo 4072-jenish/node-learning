@@ -6,7 +6,7 @@ const getAllBlogs = async (req, res) => {
       req.flash("error", "Please login first!");
       return res.redirect("/");
     }
-
+    
     const blogs = await Blog.find();
     const user = await User.findById(req.user._id);
 

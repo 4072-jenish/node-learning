@@ -62,6 +62,7 @@ const addExtraCategory = async (req, res) => {
 const editExtraCategoryForm = async (req, res) => {
   try {
     const extraCategory = await ExtraCategory.findById(req.params.id);
+    const subCategory = await SubCategory.findById(extraCategory.subCategory);
     if (!extraCategory) return res.redirect("/extraCategories");
     res.render("categories/editExtraCategory", { extraCategory });
   } catch (err) {
