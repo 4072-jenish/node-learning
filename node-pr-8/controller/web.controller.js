@@ -74,7 +74,8 @@ exports.webLoginUser = (req, res, next) => {
 
       try {
         const product = await Product.find();
-        return res.render("web.pages/webHome", { product, user });
+          const category = await Category.find();0
+        return res.render("web.pages/webHome", { product, user, category});
       } catch (error) {
         console.error("Error loading blogs:", error);
         return res.redirect("/webLogin");
@@ -93,8 +94,3 @@ exports.webLogout = (req, res) => {
     res.redirect("/webLogin");
   });
 };                                
-
-
-exports.addTocart = async (req, res) => {
-  
-}

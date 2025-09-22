@@ -1,37 +1,193 @@
-<h2>Your Cart</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart - NexShop</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    :root {
+        --bg-dark: #121212;
+        --bg-card: #1e1e1e;
+        --bg-card-hover: #252525;
+        --primary: #8a2be2;
+        --primary-hover: #9b45f0;
+        --text-primary: #f0f0f0;
+        --text-secondary: #a0a0a0;
+        --accent: #00bcd4;
+        --success: #4caf50;
+        --danger: #f44336;
+        --warning: #ff9800;
+    }
+    body {background-color: var(--bg-dark); color: var(--text-primary); min-height: 100vh; padding-bottom: 2rem;}
 
-<% if (items.length === 0) { %>
-    <p>Your cart is empty.</p>
-<% } else { %>
-    <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+    header {background-color: rgba(30, 30, 30, 0.95); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center;}
+    .logo {font-size: 1.8rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;}
+    .search-bar {flex: 1; max-width: 500px; margin: 0 2rem; position: relative;}
+    .search-bar input {width: 100%; padding: 0.8rem 1rem 0.8rem 3rem; border-radius: 50px; border: none; background-color: #2a2a2a; color: var(--text-primary); font-size: 1rem;}
+    .search-bar i {position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);}
+    .nav-icons {display: flex; gap: 1.5rem; font-size: 1.3rem;}
+    .nav-icons a {color: var(--text-primary); text-decoration: none; position: relative; transition: color 0.3s;}
+    .nav-icons a:hover {color: var(--primary);}
+    .cart-count {position: absolute; top: -8px; right: -8px; background-color: var(--primary); color: white; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center;}
+
+    .container {max-width: 1200px; margin: 2rem auto; padding: 0 1rem;}
+    .page-title {font-size: 2rem; margin-bottom: 2rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary); display: inline-block;}
+    .empty-cart {text-align: center; padding: 3rem; background-color: var(--bg-card); border-radius: 10px; margin: 2rem 0;}
+    .empty-cart i {font-size: 4rem; color: var(--text-secondary); margin-bottom: 1.5rem;}
+    .empty-cart p {font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary);}
+    .continue-shopping {background-color: var(--primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s; text-decoration: none; display: inline-block;}
+    .continue-shopping:hover {background-color: var(--primary-hover);}
+
+    .cart-container {display: grid; grid-template-columns: 1fr 350px; gap: 2rem;}
+    @media (max-width: 900px) {.cart-container {grid-template-columns: 1fr;}}
+    .cart-items {background-color: var(--bg-card); border-radius: 10px; overflow: hidden;}
+    .cart-header {display: grid; grid-template-columns: 100px 2fr 1fr 1fr 1fr 80px; padding: 1rem 1.5rem; background-color: #2a2a2a; font-weight: 600; border-bottom: 1px solid #333;}
+    @media (max-width: 768px) {.cart-header {display: none;}}
+    .cart-item {display: grid; grid-template-columns: 100px 2fr 1fr 1fr 1fr 80px; padding: 1.5rem; align-items: center; border-bottom: 1px solid #333;}
+    @media (max-width: 768px) {.cart-item {grid-template-columns: 1fr; gap: 1rem; text-align: center; position: relative; padding: 1.5rem 1rem;}}
+    .cart-item:last-child {border-bottom: none;}
+    .cart-item-image {width: 80px; height: 80px; border-radius: 8px; background-color: #2a2a2a; display: flex; align-items: center; justify-content: center; overflow: hidden;}
+    .cart-item-image img {width: 100%; height: 100%; object-fit: cover;}
+    .cart-item-name {font-weight: 500; padding: 0 1rem;}
+    @media (max-width: 768px) {.cart-item-name {padding: 0; font-size: 1.1rem;}}
+    .cart-item-price {color: var(--primary); font-weight: 600;}
+    .cart-item-quantity {display: flex; align-items: center; justify-content: center; gap: 0.5rem;}
+    .quantity-btn {background-color: #2a2a2a; color: var(--text-primary); border: none; width: 30px; height: 30px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;}
+    .quantity-btn:hover {background-color: #333;}
+    .cart-item-total {font-weight: 600; color: var(--primary);}
+    .cart-item-remove {display: flex; justify-content: center;}
+    .remove-btn {color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s;}
+    .remove-btn:hover {background-color: rgba(244, 67, 54, 0.1);}
+    .order-summary {background-color: var(--bg-card); border-radius: 10px; padding: 1.5rem; height: fit-content;}
+    .order-summary h3 {font-size: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #333;}
+    .summary-row {display: flex; justify-content: space-between; margin-bottom: 1rem;}
+    .summary-total {font-size: 1.2rem; font-weight: 600; margin: 1.5rem 0; padding-top: 1rem; border-top: 1px solid #333;}
+    .checkout-btn {width: 100%; padding: 1rem; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background-color 0.3s; margin-top: 1rem;}
+    .checkout-btn:hover {background-color: var(--primary-hover);}
+    .checkout-btn:disabled {background-color: #555; cursor: not-allowed;}
+    .continue-shopping {display: block; text-align: center; margin-top: 1rem; background-color: transparent; border: 1px solid var(--primary); color: var(--primary);}
+    .continue-shopping:hover {background-color: rgba(138,43,226,0.1);}
+    .mobile-item-details {display: none;}
+    @media (max-width: 768px) {
+        .mobile-item-details {display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;}
+        .mobile-label {color: var(--text-secondary); font-size: 0.9rem;}
+        .remove-btn {position: absolute; top: 1rem; right: 1rem;}
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo"><i class="fas fa-store"></i> <span>NexShop</span></div>
+    <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search for products..." id="searchInput"></div>
+    <div class="nav-icons">
+        <a href="/web/webLogin"><i class="fas fa-user"></i></a>
+        <a href="#"><i class="fas fa-heart"></i></a>
+        <a href="#" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count">3</span></a>
+    </div>
+</header>
+
+<div class="container">
+    <h1 class="page-title">Your Cart</h1>
+
+    <% if(items.length === 0){ %>
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Your cart is empty.</p>
+            <a href="/web/webPage" class="continue-shopping">Continue Shopping</a>
+        </div>
+    <% } else { %>
+    <div class="cart-container">
+        <div class="cart-items">
+            <div class="cart-header">
+                <div>Product</div>
+                <div>Details</div>
+                <div>Price</div>
+                <div>Quantity</div>
+                <div>Total</div>
+                <div></div>
+            </div>
+
             <% items.forEach(item => { %>
-                <tr>
-                    <td><img src="<%= item.image %>" width="60"></td>
-                    <td><%= item.name %></td>
-                    <td><%= item.quantity %></td>
-                    <td>₹<%= item.price.toFixed(2) %></td>
-                    <td>₹<%= (item.price * item.quantity).toFixed(2) %></td>
-                    <td>
-                        <form action="/cart/delete/<%= item._id %>" method="POST">
-                            <button type="submit">Remove</button>
-                        </form>
-                    </td>
-                </tr>
+            <div class="cart-item">
+                <div class="cart-item-image"><img src="<%= item.image %>" alt="<%= item.name %>"></div>
+                <div class="cart-item-name"><%= item.name %></div>
+                <div class="cart-item-price">₹<%= item.price.toFixed(2) %></div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn decrease" data-id="<%= item.product %>">-</button>
+                    <span class="quantity-value"><%= item.quantity %></span>
+                    <button class="quantity-btn increase" data-id="<%= item.product %>">+</button>
+                </div>
+                <div class="cart-item-total">₹<%= (item.price * item.quantity).toFixed(2) %></div>
+                <div class="cart-item-remove">
+                    <form action="/web/cart/delete/<%= item.product %>" method="POST">
+                        <button type="submit" class="remove-btn"><i class="fas fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
             <% }) %>
-        </tbody>
-    </table>
+        </div>
 
-    <h3>Total: ₹<%= total.toFixed(2) %></h3>
-    <button>Checkout</button>
-<% } %>
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">₹<%= (total * 0.9).toFixed(2) %></span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span id="shipping">₹50.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax</span>
+                <span id="tax">₹<%= (total * 0.1).toFixed(2) %></span>
+            </div>
+            <div class="summary-total">
+                <span>Total:</span>
+                <span id="total">₹<%= (total + 50).toFixed(2) %></span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+            <a href="/web/webPage" class="continue-shopping">Continue Shopping</a>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<script>
+document.querySelectorAll('.quantity-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+        const cartItem = this.closest('.cart-item');
+        const qtySpan = cartItem.querySelector('.quantity-value');
+        let qty = parseInt(qtySpan.textContent);
+        if(this.classList.contains('increase')) qty++;
+        if(this.classList.contains('decrease')) qty = Math.max(1, qty-1);
+        qtySpan.textContent = qty;
+
+        // Update item total
+        const price = parseFloat(cartItem.querySelector('.cart-item-price').textContent.replace('₹',''));
+        cartItem.querySelector('.cart-item-total').textContent = '₹'+(price*qty).toFixed(2);
+
+        // Update summary
+        updateSummary();
+    });
+});
+
+function updateSummary(){
+    let subtotal = 0;
+    document.querySelectorAll('.cart-item-total').forEach(t => {
+        subtotal += parseFloat(t.textContent.replace('₹',''));
+    });
+    const shipping = 50;
+    const tax = subtotal*0.1;
+    const total = subtotal + shipping;
+
+    document.getElementById('subtotal').textContent = '₹'+subtotal.toFixed(2);
+    document.getElementById('tax').textContent = '₹'+tax.toFixed(2);
+    document.getElementById('total').textContent = '₹'+total.toFixed(2);
+}
+</script>
+
+</body>
+</html>

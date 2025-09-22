@@ -543,6 +543,73 @@
             background-color: var(--primary-hover);
         }
 
+        .product-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+/* Add to Cart button */
+.add-to-cart {
+    flex: 1;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.add-to-cart:hover {
+    background-color: var(--primary-hover);
+}
+
+/* View More link styled as button */
+.view-more {
+    flex: 1;
+    background-color: #555;
+    color: #fff;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.view-more:hover {
+    background-color: #777;
+}
+
+/* Wishlist Heart */
+.wishlist-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.wishlist-btn i {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.wishlist-btn:hover {
+    background-color: #333;
+    color: var(--danger);
+}
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
@@ -579,7 +646,24 @@
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
+
         }
+        .view-more-btn {
+flex: 1;
+background-color: #555;
+color: white;
+border: none;
+padding: 0.7rem;
+border-radius: 6px;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+transition: background-color 0.3s;
+}
+.view-more-btn:hover {
+background-color: #777;
+}
     </style>
 </head>
 <body>
@@ -596,9 +680,8 @@
         <div class="nav-icons">
             <a href="/web/webLogin"><i class="fas fa-user"></i></a>
             <a href="#"><i class="fas fa-heart"></i></a>
-            <a href="#" id="cartIcon">
+            <a href="/web/cart/" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
             </a>
         </div>
     </header>
@@ -680,47 +763,51 @@
             <button class="filter-btn" id="applyFilters">Apply Filters</button>
         </div>
 
-        <div class="products-grid" id="productsGrid">
-            <% product.forEach(product=> { %>
-                <div class="product-card" data-id="<%= product._id %>" data-name="<%= product.name %>"
-                    data-price="<%= product.price %>" data-category="<%= product.category %>"
-                    data-rating="<%= product.rating %>">
-        
-                    <div class="product-image">
-                        <img class="product-image" src="<%= product.image %>" alt="<%= product.name %>" />
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">
-                            <%= product.name %>
-                        </h3>
-                        <p class="card-text product-description">
-                            <%= product.description && product.description.length> 200
-                                ? product.description.substring(0, 200) + '...'
-                                : product.description %>
-                        </p>
-                        <div class="product-price">₹<%= product.price.toFixed(2) %>
-                        </div>
-                        <div class="product-rating">
-                            <% for(let i=1; i <=5; i++){ %>
-                                <% if(i <=Math.floor(product.rating)){ %>
-                                    <i class="fas fa-star"></i>
-                                    <% } else if(i - 0.5 <=product.rating){ %>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <% } else { %>
-                                            <i class="far fa-star"></i>
-                                            <% } %>
-                                                <% } %>
-                                                    <span>(<%= product.rating %>)</span>
-                        </div>
-                        <div class="product-actions">
-                            <a href="/web/cart/add/<%= product._id %>" class="add-to-cart">Add to Cart</a>
-                            
-                            <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
+      <div class="products-grid" id="productsGrid">
+  <% product.forEach(product => { %>
+    <div class="product-card" data-id="<%= product._id %>" data-name="<%= product.name %>"
+         data-price="<%= product.price %>" data-category="<%= product.category %>"
+         data-rating="<%= product.rating %>">
+
+      <div class="product-image">
+        <img src="<%= product.image %>" alt="<%= product.name %>" />
+      </div>
+
+      <div class="product-info">
+        <h3 class="product-title"><%= product.name %></h3>
+
+        <p class="product-description">
+          <%= product.description && product.description.length > 120
+              ? product.description.substring(0, 120) + '...'
+              : product.description %>
+        </p>
+
+        <div class="product-price">₹<%= product.price.toFixed(2) %></div>
+
+        <div class="product-rating">
+          <% for(let i=1; i <=5; i++){ %>
+            <% if(i <= Math.floor(product.rating)){ %>
+              <i class="fas fa-star"></i>
+            <% } else if(i - 0.5 <= product.rating){ %>
+              <i class="fas fa-star-half-alt"></i>
+            <% } else { %>
+              <i class="far fa-star"></i>
+            <% } %>
+          <% } %>
+          <span>(<%= product.rating %>)</span>
         </div>
+
+        <div class="product-actions">
+          <a href="/web/cart/add/<%= product._id %>" class="btn add-to-cart">Add to Cart</a>
+          <a href="/web/<%= product._id %>" class="btn view-more">View More</a>
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+        </div>
+      </div>
+
+    </div>
+  <% }) %>
+</div>
+
     </div>
 
     <!-- Cart Preview --> 

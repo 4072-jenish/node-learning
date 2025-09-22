@@ -266,6 +266,9 @@
                     <div class="author-container">
                         <span><b>Price:</b> $<%= product.price || 0 %></span>
                     </div>
+
+                    <a href="/products/edit/<%= product._id %>" class="btn btn-primary">Edit</a>
+                    <a href="/products/delete/<%= product._id %>" class="btn btn-secodery">Delete</a>
                 </div>
             </div>
         </div>
