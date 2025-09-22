@@ -1,29 +1,45 @@
 const Cart = require("../models/Cart");
+const Product = require("../models/productSchema");
 
-const addToCart = async (req , res) => {
-     try {
-            const { productId, name, price, image } = req.body;
-    
-            let item = await Cart.findOne({ productId });
-            if (item) {
-                item.quantity += 1;
-                await item.save();
-            } else {
-                await Cart.create({
-                    productId,
-                    name,
-                    price,
-                    image,
-                    quantity: 1
-                });
-            }
-    
-            res.redirect("/cart");
-        } catch (err) {
-            console.error(err);
-            res.status(500).send("Error adding to cart");
-        }
-}
+const addToCart = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const userId = req.user._id; 
+
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
+
+    let cart = await Cart.findOne({ user: userId });
+    if (!cart) {
+      cart = new Cart({ user: userId, items: [] });
+    }
+
+    const existingItem = cart.items.find(
+      item => item.product.toString() === productId
+    );
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.items.push({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        quantity: 1
+      });
+    }
+
+    await cart.save();
+    res.redirect("/web/cart");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding to cart");
+  }
+};
 
 const cartPage = async (req , res) => {
       try {
@@ -47,7 +63,7 @@ const cartDelete = async (req , res) => {
 }
 
 module.exports = {
-    addToCart,
     cartPage,
+    addToCart,
     cartDelete
 };

@@ -713,7 +713,8 @@
                                                     <span>(<%= product.rating %>)</span>
                         </div>
                         <div class="product-actions">
-                            <button class="add-to-cart">Add to Cart</button>
+                            <a href="/web/cart/add/<%= product._id %>" class="add-to-cart">Add to Cart</a>
+                            
                             <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
@@ -822,62 +823,6 @@
 
     applyFilters.addEventListener("click", applyProductFilters);
     searchInput.addEventListener("input", applyProductFilters);
-
-    // ================= Cart =================
-       // ================= Cart =================
-  let cart = [];
-const cartIcon = document.getElementById("cartIcon");
-const cartPreview = document.getElementById("cartPreview");
-const closeCart = document.getElementById("closeCart");
-const cartItems = document.getElementById("cartItems");
-const cartTotal = document.getElementById("cartTotal");
-const cartCount = document.querySelector(".cart-count");
-
-function renderCart() {
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((item, i) => {
-    const div = document.createElement("div");
-    div.classList.add("cart-item");
-    div.innerHTML = `
-      <div class="cart-item-details">
-        <div class="cart-item-title">${item.name}</div>
-        <div class="cart-item-price">₹${item.price.toFixed(2)}</div>
-      </div>
-    `;
-    cartItems.appendChild(div);
-    total += item.price;
-  });
-
-  cartTotal.textContent = `₹${total.toFixed(2)}`;
-  cartCount.textContent = cart.length;
-}
-
-// Open/close cart drawer
-cartIcon.addEventListener("click", e => {
-  e.preventDefault();
-  cartPreview.classList.add("open");
-});
-
-closeCart.addEventListener("click", () => {
-  cartPreview.classList.remove("open");
-});
-
-// Attach add-to-cart buttons
-document.querySelectorAll(".add-to-cart").forEach(btn => {
-  btn.addEventListener("click", e => {
-    e.preventDefault();
-    const card = btn.closest(".product-card");
-    cart.push({
-      id: card.dataset.id,
-      name: card.dataset.name,
-      price: parseFloat(card.dataset.price) || 0
-    });
-    renderCart();
-    cartPreview.classList.add("open"); // 🔥 Auto open after add
-  });
-});
   </script>
 </body>
 </html>
