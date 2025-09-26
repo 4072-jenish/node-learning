@@ -1,19 +1,16 @@
-const User = require('../models/user.schema');
+const userModel = require('../models/user.schema');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and Password are required" });
-    }
-
-    const user = await UserModel.findOne({ email, isDelete: false });
+    let user = await userModel.findOne({ email: req.body.email, isDeleted: false });
+    console.log(user);
+     
     if (!user) {
       return res.status(404).json({ status: 404, message: "User not found" });
     }
-    const comparePassword = await bcrypt.compare(password, user.password);
+    const comparePassword = await bcrypt.compare(req.body.password, user.password);
     if (!comparePassword) {
       return res.status(400).json({ status: 400, message: "Invalid credentials" });
     }
