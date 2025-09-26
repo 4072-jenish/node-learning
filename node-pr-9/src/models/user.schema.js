@@ -10,10 +10,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['Male', 'Female']
   },
-  image: {
-    type: String, 
-    required: false
-  },
   role: {
     type: String,
   },
