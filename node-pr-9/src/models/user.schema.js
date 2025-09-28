@@ -10,9 +10,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['Male', 'Female']
   },
-  role: {
-    type: String,
-  },
+ role: {
+  type: String,
+  enum: ["Admin", "Manager", "Employee"],
+  default: "Employee"
+},
   isDeleted: {
     type: Boolean,
     default: false
