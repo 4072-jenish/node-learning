@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
 
 const regUser = async(req, res) => {
     try {
-       let user = await User.findOne({email: req.body.email, isDelete: false})
+       let user = await userModel.findOne({email: req.body.email, isDelete: false})
        if(user){
         return res.json({status: 400, message: "User Already Exist"});
        }
