@@ -5,10 +5,10 @@ const upload = require("../middleware/multerImage.js");
 
 const empRouter = express.Router();
 
-empRouter.get("/viewSelf", verifyToken, verifyRole("Admin" , "Manager" , "Employee"), getMyProfile);
-empRouter.put("/editSelf", verifyToken, verifyRole("Admin" , "Manager" , "Employee"),   upload.none(),updateMyProfile);
+empRouter.get("/viewSelf", verifyToken,getMyProfile);
+empRouter.put("/editSelf", verifyToken,upload.none(),updateMyProfile);
 empRouter.get("/employees", verifyToken , getAllEmployees);
-empRouter.get("/singleEmployee/:id", verifyToken, verifyRole("Admin" , "Manager" , "Employee"), getEmployeeById);
+empRouter.get("/singleEmployee/:id", verifyToken, getEmployeeById);
 
 
 module.exports = empRouter;

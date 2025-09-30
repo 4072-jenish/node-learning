@@ -1,5 +1,5 @@
 const UserModel = require("../models/user.schema");
-const bcrypt = require("bcrypt"); 
+const bcrypt = require("bcrypt");  
 
 exports.getMyProfile = async (req, res) => {
   res.json(req.user);

@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.schema");
 const bcrypt = require("bcrypt");
+const { sendCredentialsMail } = require("../utils/mailTemplates");
 
 exports.getAllUsers = async (req, res) => {
   const users = await UserModel.find({ isDeleted: false });
@@ -53,7 +54,10 @@ exports.createUser = async (req, res) => {
       role,
     });
 
-    res.status(201).json({ message: "User created", user });
+      sendCredentialsMail(user, password);
+
+
+    res.status(201).json({ message: "User created & Mail Sent", user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.schema");
 const bcrypt = require("bcrypt");
+const { sendCredentialsMail } = require("../utils/mailTemplates");
 
 exports.getEmployees = async (req, res) => {
   const employees = await UserModel.find({ role: "Employee", isDeleted: false });
@@ -26,6 +27,7 @@ exports.createEmployee = async (req, res) => {
       password: hashedPassword,
       role: role || "Employee",
     });
+          sendCredentialsMail(employee, password);
 
     res.status(201).json({ message: "Employee created", employee });
   } catch (err) {
