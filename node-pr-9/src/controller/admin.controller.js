@@ -15,24 +15,30 @@ exports.getUserById = async (req, res) => {
 
   res.json(user);
 };
-exports.getAllEmployee = async (req, res) => {
-  const users = await UserModel.find( { role : Employee , isDeleted: false });
-  res.json(users);
-};
-
-exports.getUserById = async (req, res) => {
-  const { id } = req.params;
-  const user = await UserModel.findById(id);
-
-  if (!user || user.isDeleted) return res.status(404).json({ message: "User not found" });
-
-  res.json(user);
-};
 
 exports.deleteUser = async (req, res) => {
-  await UserModel.findByIdAndUpdate(req.params.id, { isDeleted: true });
-  res.json({ message: "User deleted" });
+  try {
+    const user = await UserModel.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.isDeleted === true) {
+      return res.status(400).json({ message: "User is already deleted" });
+    }
+
+    user.isDeleted = true;
+    await user.save();
+
+    return res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
+
+
 
 exports.createUser = async (req, res) => {
   try {
@@ -92,3 +98,4 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+

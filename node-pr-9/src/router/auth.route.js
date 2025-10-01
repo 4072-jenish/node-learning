@@ -4,6 +4,6 @@ const upload = require('../middleware/multerImage');
 const authRouter = express.Router();
 
 authRouter.post('/loginUser', loginUser);
-authRouter.post('/regUser', upload.single("image") ,regUser);
+authRouter.post('/regUser', regUser);
 
 module.exports = authRouter;

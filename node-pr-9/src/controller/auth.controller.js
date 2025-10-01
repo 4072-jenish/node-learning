@@ -37,15 +37,10 @@ const regUser = async(req, res) => {
        if(user){
         return res.json({status: 400, message: "User Already Exist"});
        }
-       let imagePath = "";
-       if(req.file){
-        imagePath = `/uploads/${req.file.filename}`;
-       }
        let hashPassword = await bcrypt.hash(req.body.password, 10);
-       user = await User.create({
+       user = await userModel.create({
         ...req.body,
-        password: hashPassword,
-        profileImage: imagePath
+        password: hashPassword
        });
        return res.json({status: 201, message: "New User Register"});
     } catch (error) {

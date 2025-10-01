@@ -10,22 +10,16 @@ const sendCredentialsMail = async (user, plainPassword) => {
   const subject = "Welcome to Company Portal";
 
   const text = `
-      <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Creation Email</title>
-    <style>
+  <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,134 +30,200 @@ const sendCredentialsMail = async (user, plainPassword) => {
         .email-container {
             max-width: 600px;
             width: 100%;
-            background: white;
-            border-radius: 12px;
+            background: #1a1a1a;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.1);
+            border: 1px solid #333;
         }
         
         .email-header {
-            background: linear-gradient(135deg, #4361ee, #3a0ca3);
-            color: white;
-            padding: 30px;
+            background: linear-gradient(135deg, #000000, #8B0000);
+            color: #ffffff;
+            padding: 40px 30px;
             text-align: center;
+            border-bottom: 3px solid #ff0000;
         }
         
         .email-header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
         
         .email-header p {
             opacity: 0.9;
+            font-size: 16px;
+            font-weight: 300;
         }
         
         .email-body {
-            padding: 30px;
+            padding: 40px 30px;
+            background: #1a1a1a;
         }
         
         .greeting {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-weight: 600;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
         }
         
         .message {
-            margin-bottom: 25px;
-            line-height: 1.6;
-            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            color: #cccccc;
+            font-size: 16px;
         }
         
         .credentials {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 25px 0;
-            border-left: 4px solid #4361ee;
+            background: #2a2a2a;
+            border-radius: 0;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid #ff0000;
+            border-right: 1px solid #333;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
         
         .credential-item {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: flex;
+            align-items: center;
+            padding: 8px 0;
         }
         
         .credential-label {
             font-weight: 600;
-            min-width: 80px;
-            color: #333;
+            min-width: 100px;
+            color: #ffffff;
+            font-size: 16px;
         }
         
         .credential-value {
-            color: #4361ee;
+            color: #ff4444;
             font-weight: 500;
+            font-size: 16px;
+            background: #333;
+            padding: 8px 12px;
+            border-radius: 3px;
+            margin-left: 10px;
+            flex-grow: 1;
         }
         
         .instructions {
-            background: #e7f5ff;
-            border-radius: 8px;
-            padding: 18px;
-            margin: 25px 0;
-            border-left: 4px solid #4cc9f0;
+            background: #2a1a1a;
+            border-radius: 0;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid #8B0000;
+            border-right: 1px solid #333;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
         
         .instructions p {
-            margin-bottom: 8px;
-            color: #2c3e50;
+            margin-bottom: 12px;
+            color: #cccccc;
+            font-size: 15px;
+        }
+        
+        .instructions p:first-child {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
         
         .button-container {
             text-align: center;
-            margin: 30px 0;
+            margin: 35px 0;
         }
         
         .login-button {
             display: inline-block;
-            background: #4361ee;
+            background: #ff0000;
             color: #ffffff;
-            padding: 14px 30px;
+            padding: 16px 40px;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 0;
             font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             transition: all 0.3s;
+            border: 1px solid #ff0000;
         }
         
         .login-button:hover {
-            background: #3a0ca3;
+            background: #8B0000;
+            border-color: #8B0000;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(58, 12, 163, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
         
         .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #333;
             text-align: center;
-            color: #777;
+            color: #888;
             font-size: 14px;
         }
         
-        .highlight {
-            color: #3a0ca3;
+        .password-warning {
+            color: #ff4444;
             font-weight: 600;
+            margin-top: 15px;
+            font-size: 15px;
+            text-align: center;
+            padding: 12px;
+            background: #2a1a1a;
+            border: 1px solid #333;
         }
         
-        .password-warning {
-            color: #e63946;
-            font-weight: 600;
-            margin-top: 10px;
+        .company-name {
+            color: #ff0000;
+            font-weight: 700;
+        }
+        
+        .security-badge {
+            display: inline-block;
+            background: #8B0000;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+            margin-left: 10px;
+            vertical-align: middle;
         }
         
         @media (max-width: 600px) {
             .email-body {
-                padding: 20px;
+                padding: 25px 20px;
             }
             
             .email-header {
-                padding: 20px;
+                padding: 30px 20px;
             }
             
             .email-header h1 {
-                font-size: 24px;
+                font-size: 26px;
+            }
+            
+            .credential-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .credential-value {
+                margin-left: 0;
+                margin-top: 5px;
+                width: 100%;
             }
         }
     </style>
@@ -171,14 +231,14 @@ const sendCredentialsMail = async (user, plainPassword) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <h1>Welcome to Our Platform</h1>
+            <h1>WELCOME TO COMPANY PORTAL</h1>
             <p>Your account has been successfully created</p>
         </div>
         
         <div class="email-body">
             <h2 class="greeting">Hello ${user.firstName},</h2>
             
-            <p class="message">Thank you for joining us! Your account has been created successfully and is ready to use.</p>
+            <p class="message">Thank you for joining <span class="company-name">Company Portal</span>! Your account has been created successfully and is ready to use.</p>
             
             <div class="credentials">
                 <div class="credential-item">
@@ -196,22 +256,22 @@ const sendCredentialsMail = async (user, plainPassword) => {
                 <p>• Change your password after first login</p>
                 <p>• Enable two-factor authentication</p>
                 <p>• Review your account settings</p>
+                <p>• Log out after each session</p>
             </div>
             
-            <p class="password-warning">Please keep your login credentials secure and do not share them with anyone.</p>
+            <p class="password-warning">⚠️ Please keep your login credentials secure and do not share them with anyone.</p>
             
             <div class="button-container">
-                <a href="#" class="login-button">Login to Your Account</a>
+                <a href="#" class="login-button">Access Your Account</a>
             </div>
             
             <div class="footer">
                 <p>If you have any questions, please contact our support team.</p>
-                <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+                <p>&copy; 2023 <span class="company-name">Company Portal</span>. All rights reserved. <span class="security-badge">SECURE</span></p>
             </div>
         </div>
     </div>
-</body>
-</html>`;
+</body>`;
 
   await sendMail(user.email, subject, text);
 };

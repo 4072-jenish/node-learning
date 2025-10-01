@@ -43,7 +43,6 @@ exports.getEmployeeById = async (req, res) => {
 
   if (!user || user.isDeleted) return res.status(404).json({ message: "User not found" });
 
-  // Employees can only view themselves
   if (req.user.role === "Employee" && req.user._id.toString() !== id) {
     return res.status(403).json({ message: "Forbidden" });
   }

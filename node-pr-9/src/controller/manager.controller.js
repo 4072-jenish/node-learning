@@ -2,14 +2,15 @@ const UserModel = require("../models/user.schema");
 const bcrypt = require("bcrypt");
 const { sendCredentialsMail } = require("../utils/mailTemplates");
 
-exports.getEmployees = async (req, res) => {
-  const employees = await UserModel.find({ role: "Employee", isDeleted: false });
-  res.json(employees);
+exports.getMAnagers = async (req, res) => {
+  const Managers = await UserModel.find({ role: "Managers", isDeleted: false });
+  res.json(Managers);
 };
+
 
 exports.createEmployee = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, contactNo ,password, role } = req.body;
 
     if (role === "Admin") {
       return res.status(403).json({ message: "Manager cannot create Admin" });
@@ -23,6 +24,7 @@ exports.createEmployee = async (req, res) => {
     const employee = await UserModel.create({
       firstName,
       lastName,
+      contactNo,
       email,
       password: hashedPassword,
       role: role || "Employee",
@@ -36,19 +38,6 @@ exports.createEmployee = async (req, res) => {
   }
 };
 
-exports.getEmployeeById = async (req, res) => {
-  const { id } = req.params;
-  const user = await UserModel.findById(id);
-
-  if (!user || user.isDeleted) return res.status(404).json({ message: "User not found" });
-
-  if (user.role !== "Employee") {
-    return res.status(403).json({ message: "Forbidden" });
-  }
-
-  res.json(user);
-};
-
 exports.deleteUser = async (req, res) => {
   await UserModel.findByIdAndUpdate(req.params.id, { isDeleted: true });
   res.json({ message: "User deleted" });
@@ -57,7 +46,7 @@ exports.deleteUser = async (req, res) => {
 exports.updateEmployee = async (req, res) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, contactNo , password, role } = req.body;
     console.log(id);
     
 
@@ -75,6 +64,7 @@ exports.updateEmployee = async (req, res) => {
     if (firstName) employee.firstName = firstName;
     if (lastName) employee.lastName = lastName;
     if (email) employee.email = email;
+    if (contactNo) employee.contactNo = contactNo;
     if (role && role !== "Admin") {
       employee.role = role; 
     }
