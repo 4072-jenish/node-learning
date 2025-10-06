@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "cf417356-731e-4d91-a14f-ace48b691d9a",
+		"name": "My Recipes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48697342"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "arora@test.in",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "arora123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "Rajiv",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Arora",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "arora@test.in",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "arora123",
+							"type": "text"
+						},
+						{
+							"key": "contactNo",
+							"value": "9865321447",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "Male",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "Admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Recipe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NDY5MDZ9.QGAm8uGy7mbNYRWfoVdcbBitQ1Zmr-YqBExtAnrddq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"bhajiya\",\r\n    \"ingrediant\" : \"Methi, Onian, Chilli, Besan, oil, Soda\",\r\n    \"instructions\" : \" This recipe is for classic onion bhajiya (or pakora), a crispy, deep-fried Indian snack. The key is to let the salt draw moisture out of the onions, so you need very little, if any, additional water for the batter. \",\r\n    \"category\" : \"Main Course\",\r\n    \"tags\" : \"Oily , Testy, Junck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/admin/addRecipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"addRecipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Reacipe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NDY5MDZ9.QGAm8uGy7mbNYRWfoVdcbBitQ1Zmr-YqBExtAnrddq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"bhajiyas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/admin/editRecipe/68e3a480b08d30a374f0a83e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"editRecipe",
+						"68e3a480b08d30a374f0a83e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Resipe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NDY5MDZ9.QGAm8uGy7mbNYRWfoVdcbBitQ1Zmr-YqBExtAnrddq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/admin/allUsers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"allUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NDY5MDZ9.QGAm8uGy7mbNYRWfoVdcbBitQ1Zmr-YqBExtAnrddq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/admin/singleUser/68e38e24ae50d95a71bb566b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"singleUser",
+						"68e38e24ae50d95a71bb566b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Recipes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NDY5MDZ9.QGAm8uGy7mbNYRWfoVdcbBitQ1Zmr-YqBExtAnrddq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/client/allRecipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"client",
+						"allRecipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Recipe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NTE0Nzl9.biNnW2nO0rxONUPyp-Vg0_KDcgu08O6XkDYJto32VYw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/client/singleRecipe/68e3a480b08d30a374f0a83e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"client",
+						"singleRecipe",
+						"68e3a480b08d30a374f0a83e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewSelf",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NTE0Nzl9.biNnW2nO0rxONUPyp-Vg0_KDcgu08O6XkDYJto32VYw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/viewSelf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"viewSelf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Self",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk3NTE0Nzl9.biNnW2nO0rxONUPyp-Vg0_KDcgu08O6XkDYJto32VYw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\" : \"Punkaj\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/editSelf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"editSelf"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

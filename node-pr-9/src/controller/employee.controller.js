@@ -7,10 +7,6 @@ exports.getMyProfile = async (req, res) => {
 
 exports.updateMyProfile = async (req, res) => {
   try {
-      console.log("Headers:", req.headers["content-type"]);
-  console.log("Body received:", req.body);
-
-
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
