@@ -1,4 +1,5 @@
 const userModel = require("../models/user.schema");
+const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
   const users = await userModel.find({ isDeleted: false });
@@ -36,8 +37,38 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { firstName, lastName, email, password, role } = req.body;
+
+    const user = await userModel.findById(id);
+    if (!user || user.isDeleted) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (email) user.email = email;
+    if (role) user.role = role;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
+    await user.save();
+
+    res.json({ message: "User updated successfully", user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = { 
   getAllUsers, 
   getUserById, 
-  deleteUser
+  deleteUser,
+  updateUser
  };

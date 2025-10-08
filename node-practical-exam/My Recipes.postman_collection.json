@@ -392,6 +392,82 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Edit User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk4MTQxMjV9.hG5m12ZAgDpyRjWmymeYNdD_wygNanEK0up4tGYgBbA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\" : \"Yogesh\",\r\n    \"lastName\" : \"Rathod\",\r\n    \"email\" : \"yogesh@test.in\",\r\n    \"password\" : \"yogesh123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/admin/editUser/68e38e24ae50d95a71bb566b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"editUser",
+						"68e38e24ae50d95a71bb566b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGUzOGJhYWI1OTVhMTU5NjE5ZmE4MjIiLCJpYXQiOjE3NTk4MTQxMjV9.hG5m12ZAgDpyRjWmymeYNdD_wygNanEK0up4tGYgBbA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/admin/delUser/68e38e24ae50d95a71bb566b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"admin",
+						"delUser",
+						"68e38e24ae50d95a71bb566b"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
